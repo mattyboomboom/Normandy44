@@ -1,0 +1,23 @@
+---
+// Later steps of a close-up, e.g. /epsom/2/.
+import Base from '../../layouts/Base.astro';
+import Atlas from '../../components/Atlas.astro';
+import { loadContent } from '../../lib/load';
+import { momentDescription, momentTitle } from '../../lib/meta';
+
+export async function getStaticPaths() {
+  const { scenes } = await loadContent();
+  return scenes
+    .map((sc, i) => ({ sc, i }))
+    .filter(({ sc }) => sc.step && sc.step.n > 1)
+    .map(({ sc, i }) => ({ params: { moment: sc.step!.moment, step: String(sc.step!.n) }, props: { index: i } }));
+}
+
+const { index } = Astro.props;
+const { scenes } = await loadContent();
+const sc = scenes[index];
+---
+<Base title={momentTitle(sc)} description={momentDescription(sc)} path={`${sc.step!.moment}/${sc.step!.n}/`}
+  image={`og/${sc.id}.png`} imageAlt={`Map: ${sc.title}, ${sc.step!.title}, ${sc.date}`} bodyClass="atlas docked" preloadMap>
+  <Atlas scenes={scenes} index={index} />
+</Base>

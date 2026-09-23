@@ -1,8 +1,10 @@
 # Normandy 1944: an animated atlas
 
-An interactive map of the Normandy campaign, from the eve of D-Day (5 June 1944) to the crossing of the Seine at the end of August. It opens on the globe, closes in on the Channel coast, lands on the five beaches, and then follows the Allied area of control as it spreads across Normandy through 18 key moments: the airborne drops, Omaha, the link-up, the storm, Cherbourg, Caen, Goodwood, Cobra, Avranches, Mortain, the Falaise pocket, the liberation of Paris and the end of the battle.
+An interactive map of the Normandy campaign, from the eve of D-Day (5 June 1944) to the crossing of the Seine at the end of August. It opens on the globe, closes in on the Channel coast, lands on the five beaches, and then follows the Allied area of control as it spreads across Normandy through 21 moments: Montgomery's plan, the airborne drops, Omaha, the link-up, the storm, Cherbourg, Epsom, Caen, the hedgerow war, Goodwood, Cobra, Avranches, Mortain, the Falaise pocket, the liberation of Paris and the end of the battle. Epsom, Goodwood and Cobra are close-ups told in three steps each, with formations, start lines and bombing zones.
 
-Each moment has its own page (e.g. `/cobra/`) with an info panel giving context and troop numbers, and every figure links to its source. There is also a text-only [story](https://mattyboomboom.github.io/Normandy44/story/) page, an [About](https://mattyboomboom.github.io/Normandy44/about/) page and a [Sources](https://mattyboomboom.github.io/Normandy44/sources/) page.
+The story is told around Montgomery's hinge at Caen: the British and Canadians drawing in the German armour so the Americans could break out. A gauge under the day counter shows how many German armoured divisions faced each front, wherever a source records it.
+
+The front page (`/`) is a title over the globe; each moment has its own page (e.g. `/cobra/`, with close-up steps at `/cobra/2/`) with an info panel giving context and troop numbers, and every figure links to its source. There is also a text-only [story](https://mattyboomboom.github.io/Normandy44/story/) page, an [About](https://mattyboomboom.github.io/Normandy44/about/) page and a [Sources](https://mattyboomboom.github.io/Normandy44/sources/) page.
 
 ## Running it
 
@@ -29,7 +31,8 @@ To host at the root of a domain instead (a custom domain on Pages, or Vercel), b
 
 ```
 src/
-  content/moments/*.yaml  the 18 moments: text, figures (with sources), events, arrows, camera
+  content/moments/*.yaml  the 21 moments: text, figures (with sources), armour counts, events,
+                          arrows, camera; close-ups have steps with formations, lines and zones
   content/sources.yaml    bibliography
   content/schema.ts       what a moment and a source must look like (checked at build)
   content.config.ts       registers the two collections
@@ -47,6 +50,8 @@ src/
     panel.ts                info panel and day counter
     timeline.ts, player.ts  timeline bar and autoplay
     router.ts               one address per moment, Back / Forward
+    tactical.ts             close-up detail: formation symbols, lines, zones, village names
+    cover.ts                the front-page title and its docked wordmark
     rings.ts, geo.ts        ring resampling; base map loading
   data/                   area outlines over time, places, rivers, nation colours,
                           troops-ashore series, shared types
@@ -73,6 +78,8 @@ forces:
     check: verified            # or unverified (shown in amber)
     note: Anything a careful reader should know.
 ```
+
+A close-up replaces `day`, `date`, `cam`, `state` and `body` with a list of `steps`, each of which has those fields plus optional `units` (formations: `n`, `k` of `inf`/`arm`/`mech`/`para`/`kg`, `label`, `p`), `lines` (`start`, `objective`, `road`, `ridge`), `zones` (`bomb`, `corridor`, `pocket`) and `labels` (village names). An optional `armour` block (`br`, `us`, `when`, `src`) feeds the balance-of-armour gauge.
 
 The build and the unit tests fail with a clear message if a moment breaks the rules: an unknown source, an unknown area state, a point outside the map, a figure without a check status, a gap in the numbering, and so on. To change the base map, edit `data-src/geo.json` and run `npm run geo` (lossless: coordinates are kept to 4 decimal places).
 
@@ -102,6 +109,6 @@ npm run compare -- tests/visual/baseline tests/visual/current
 
 Front lines and areas of control are simplified from period situation maps and are approximate, drawn to show the shape of the campaign rather than the exact line on a given day.
 
-Every figure is listed on the Sources page with its source, its check status and any notes. In September 2026 the figures were checked against the D-Day Story (Portsmouth), the Congressional Research Service's D-Day primer, the National WWII Museum, and Wikipedia articles and the works they cite; several were corrected in the process (their notes say what changed) and five are marked unverified until they can be traced, most likely in the US and British official histories.
+Every figure is listed on the Sources page with its source, its check status and any notes. In September 2026 the figures were checked against the D-Day Story (Portsmouth), the Congressional Research Service's D-Day primer, the National WWII Museum, and Wikipedia articles and the works they cite; several were corrected in the process (their notes say what changed). One figure, the build-up to 30 June, is still marked unverified until it can be traced in the official histories.
 
 Map data: Natural Earth (public domain), and the French coastline from france-geojson (derived from IGN / INSEE open data). Rendering: d3. Fonts: Big Shoulders Stencil Display and Source Serif 4 (SIL Open Font License), self-hosted from Fontsource.

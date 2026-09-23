@@ -22,6 +22,7 @@ import { resampleStates } from '../src/atlas/rings';
 import { frameCamera, type Box } from '../src/atlas/camera';
 import { dayLabel, fullDate } from '../src/atlas/panel';
 import type { LonLat, Scene } from '../src/data/types';
+import { flattenMoments, type MomentData } from '../src/lib/content';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'public/og');
@@ -36,8 +37,8 @@ interface GeoSource {
 const geo = JSON.parse(fs.readFileSync(path.join(ROOT, 'data-src/geo.json'), 'utf8')) as GeoSource;
 const states = resampleStates(STATES);
 
-const scenes: Scene[] = fs.readdirSync(path.join(ROOT, 'src/content/moments')).filter(f => f.endsWith('.yaml')).sort()
-  .map(f => ({ id: f.replace(/^\d+-/, '').replace(/\.yaml$/, ''), ...moment.parse(YAML.parse(fs.readFileSync(path.join(ROOT, 'src/content/moments', f), 'utf8'))) }) as Scene);
+const scenes: Scene[] = flattenMoments(fs.readdirSync(path.join(ROOT, 'src/content/moments')).filter(f => f.endsWith('.yaml')).sort()
+  .map(f => ({ id: f.replace(/^\d+-/, '').replace(/\.yaml$/, ''), data: moment.parse(YAML.parse(fs.readFileSync(path.join(ROOT, 'src/content/moments', f), 'utf8'))) as MomentData })));
 
 const esc = (s: string) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string);
 
@@ -55,15 +56,30 @@ function wrap(text: string, max: number): string[] {
 function render(sc: Scene, cover = false): string {
   const cam = frameCamera(sc.cam, AVAIL, false);
   const proj = geoOrthographic().clipAngle(90).precision(0.25)
-    .rotate([-cam.lon, -cam.lat]).scale(cam.scale).translate([AVAIL.x + AVAIL.w / 2, AVAIL.y + AVAIL.h / 2]);
+    .rotate([-cam.lon, -cam.lat]).scale(cam.scale).translate([AVAIL.x + AVAIL.w / 2, AVAIL.y + AVAIL.h / 2])
+    // keep geometry near the image: at close-up zoom, unclipped coastlines run to
+    // millions of pixels, which resvg cannot handle
+    .clipExtent([[-100, -100], [W + 100, H + 100]]);
   const gp = geoPath(proj);
   const d = (o: GeoPermissibleObjects) => gp(o) || '';
   const s = cam.scale;
-  const P = (p: LonLat) => proj(p) as [number, number] | null;
+  // points far off the image are pulled in to a margin (only off-screen shape changes)
+  const M = 2000;
+  const P = (p: LonLat) => {
+    const q = proj(p) as [number, number] | null;
+    return q ? [Math.max(-M, Math.min(W + M, q[0])), Math.max(-M, Math.min(H + M, q[1]))] as [number, number] : null;
+  };
 
+  /** Is a set of points visible at all, with some size? (resvg fails on zero-size shapes) */
+  const usable = (xy: [number, number][]) => {
+    if (!xy.length) return false;
+    const xs = xy.map(p => p[0]), ys = xy.map(p => p[1]);
+    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+    return x1 - x0 > 0.5 && y1 - y0 > 0.5 && x1 > 0 && x0 < W && y1 > 0 && y0 < H;
+  };
   const ringD = (pts: LonLat[]) => {
     const xy = pts.map(P).filter((p): p is [number, number] => !!p);
-    return xy.length ? 'M' + xy.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' : '';
+    return usable(xy) ? 'M' + xy.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' : '';
   };
   const st = states[sc.state];
   const rings = RING_KEYS.map(k => ({ k, d: ringD(st[k]), c: NAT[RING_NATION[k]] })).filter(r => r.d);
@@ -71,7 +87,7 @@ function render(sc: Scene, cover = false): string {
   const curve = line().curve(curveCatmullRom.alpha(0.5));
   const arrows = (sc.arrows || []).map(a => {
     const pts = a.pts.map(P);
-    if (pts.some(p => !p)) return '';
+    if (pts.some(p => !p) || !usable(pts as [number, number][])) return '';
     const dd = curve(pts as [number, number][]) || '';
     const w = (a.w || 2.4) * 1.3;
     const casing = a.n === 'de' ? 'rgba(236,231,216,.75)' : 'rgba(22,22,18,.35)';
@@ -91,7 +107,7 @@ function render(sc: Scene, cover = false): string {
 
   const beaches = sc.beaches ? RING_KEYS.map(k => {
     const xy = geo.beaches[k].map(P);
-    if (xy.some(p => !p)) return '';
+    if (xy.some(p => !p) || !usable(xy as [number, number][])) return '';
     return `<path d="M${(xy as [number, number][]).map(p => p.join(',')).join('L')}" fill="none" stroke="${NAT[BEACH_NAT[k]]}" stroke-width="${Math.max(4, Math.min(10, s / 6000))}" stroke-linecap="round"/>`;
   }).join('') : '';
 
@@ -148,7 +164,7 @@ const png = (svg: string) => new Resvg(svg, {
   font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'Source Serif 4' },
   fitTo: { mode: 'width', value: W }
 }).render().asPng();
-for (const sc of scenes) fs.writeFileSync(path.join(OUT, `${sc.id}.png`), png(render(sc)));
+for (const sc of scenes) { fs.writeFileSync(path.join(OUT, `${sc.id}.png`), png(render(sc))); }
 // Front page (and the default for other pages): the first moment's globe with the title
 const coverPng = png(render({ ...scenes[0], cam: { globe: true, center: [-9, 46] }, events: [] }, true));
 fs.writeFileSync(path.join(OUT, 'cover.png'), coverPng);

@@ -1,0 +1,167 @@
+# The hedgerow war (7–19 July)
+order: 13
+title: The hedgerow war
+day: 38
+date: 7–19 July
+cam: [[-1.63, 49.06], [-0.93, 49.33]]
+state: s7
+beaches: false
+body:
+- South of the beaches the land breaks into thousands of small fields, each walled by an earth bank a metre or two high and crowned with hedge. Every field is a fortress and every sunken lane an ambush. First Army’s July offensive towards Saint-Lô costs about 40,000 casualties for twenty miles.
+- The answer comes from the ranks. Sergeant Curtis G. Culin of the 102nd Cavalry Reconnaissance Squadron welds steel teeth, cut from German beach obstacles, to the front of a Sherman, so it can burst through a hedgerow instead of rearing up over it and exposing its thin underside. Bradley watches a demonstration on 14 July, and some 500 are made in time for Cobra.
+- Saint-Lô, a heap of ruins, falls on 18–19 July. Major Thomas Howie of the 116th Infantry, killed on the 17th, is carried into the town on the bonnet of a jeep.
+forces:
+- n: us
+  k: First Army casualties in the hedgerows
+  v: ≈40,000
+  s: For a gain of about 20 miles
+  src:
+  - wp-saint-lo
+  check: verified
+  note: Wikipedia gives this estimate without its underlying source; Blumenson’s Breakout and Pursuit is the place to confirm it.
+- n: us
+  k: 29th Infantry Division casualties, 7–22 July
+  v: 3,706
+  src:
+  - wp-saint-lo
+  check: verified
+- n: us
+  k: 30th Infantry Division
+  v: 3,934
+  src:
+  - wp-saint-lo
+  check: verified
+- n: us
+  k: 35th Infantry Division
+  v: 2,437
+  src:
+  - wp-saint-lo
+  check: verified
+- n: us
+  k: Hedgerow cutters made before Cobra
+  v: ≈500
+  s: From German beach obstacles; Blumenson doubted they mattered much beyond morale
+  src:
+  - wp-rhino
+  check: verified
+  note: Hastings records that the idea came from a soldier named Roberts, and that Culin built it. The cutter was a set of teeth, not a dozer blade; dozer tanks existed separately.
+- n: de
+  k: Defenders
+  s: II Parachute Corps and the 352nd Division; Panzer Lehr, sent west, counter-attacks on 11 July
+  src:
+  - wp-saint-lo
+  - stacey1960
+  check: verified
+labels:
+- n: Pont-Hébert
+  p: [-1.1735, 49.1829]
+- n: Saint-Jean-de-Daye
+  p: [-1.1401, 49.2336]
+- n: Le Dézert
+  p: [-1.1661, 49.2088]
+- n: Villiers-Fossard
+  p: [-1.0605, 49.1612]
+- n: Saint-Georges-d’Elle
+  p: [-0.9792, 49.1511]
+- n: Lessay
+  p: [-1.5257, 49.2236]
+units:
+- n: us
+  k: inf
+  label: 79th
+  p: [-1.6, 49.284]
+  size: div
+  lp: l
+- n: us
+  k: inf
+  label: 90th
+  p: [-1.47, 49.275]
+  size: div
+  lp: t
+- n: us
+  k: inf
+  label: 83rd
+  p: [-1.3, 49.262]
+  size: div
+- n: us
+  k: inf
+  label: 9th
+  p: [-1.19, 49.225]
+  size: div
+  lp: l
+- n: us
+  k: inf
+  label: 30th
+  p: [-1.125, 49.215]
+  size: div
+- n: us
+  k: inf
+  label: 35th
+  p: [-1.115, 49.165]
+  size: div
+  lp: l
+- n: us
+  k: inf
+  label: 29th
+  p: [-1.06, 49.172]
+  size: div
+  lp: l
+- n: us
+  k: inf
+  label: 2nd
+  p: [-0.975, 49.13]
+  size: div
+  lp: b
+- n: de
+  k: arm
+  label: Panzer Lehr
+  p: [-1.225, 49.18]
+  size: div
+  lp: b
+- n: de
+  k: para
+  label: 3rd Parachute
+  p: [-1.01, 49.1]
+  size: div
+  lp: b
+- n: de
+  k: mech
+  label: 2nd SS
+  p: [-1.46, 49.19]
+  size: div
+  lp: b
+events:
+- n: Saint-Lô
+  p: [-1.09, 49.115]
+  k: star
+  nat: us
+  note: Taken 18–19 July
+  lp: l
+- n: La Haye-du-Puits
+  p: [-1.5411, 49.2908]
+  k: point
+  nat: us
+  note: Taken 8 July
+  lp: r
+- n: Mont Castre
+  p: [-1.505, 49.265]
+  k: clash
+  nat: us
+  note: 90th Division, early July
+  lp: b
+- n: Hill 192
+  p: [-0.99, 49.14]
+  k: clash
+  nat: us
+  note: 2nd Division, 11–12 July
+  lp: r
+arrows:
+- n: us
+  pts: [[-1.03, 49.152], [-1.06, 49.132], [-1.082, 49.119]]
+  w: 2.4
+- n: us
+  pts: [[-1.15, 49.235], [-1.16, 49.2], [-1.165, 49.172]]
+  w: 2.2
+- n: de
+  pts: [[-1.24, 49.17], [-1.2, 49.19], [-1.17, 49.205]]
+  w: 2.2

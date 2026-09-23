@@ -1,0 +1,75 @@
+# The gap is closed (19–21 August)
+order: 19
+title: The gap is closed
+day: 76
+date: 19–21 August
+cam: [[-0.9, 48.45], [2.1, 49.35]]
+state: s11
+beaches: false
+body:
+- Polish and American troops meet at Chambois on 19 August. For two days the Polish 1st Armoured Division holds Mont Ormel, Hill 262, against Germans breaking out from inside and panzers attacking from outside, until Canadians relieve them and the pocket is sealed on the 21st.
+- The Dives valley becomes a killing ground. Far to the east, US 79th Division crosses the Seine at Mantes on the 19th.
+forces:
+- n: de
+  k: Germans killed in the pocket
+  v: 10,000–15,000
+  src:
+  - wp-falaise
+  check: verified
+  note: Estimates vary.
+- n: de
+  k: Germans captured
+  v: 40,000–50,000
+  src:
+  - wp-falaise
+  - wp-overlord
+  check: verified
+  note: Estimates vary.
+- n: de
+  k: Escaped east
+  v: 20,000–50,000
+  s: Mostly without their heavy equipment
+  src:
+  - wp-falaise
+  check: verified
+- n: ca
+  k: Canadian casualties, Tractable to the gap
+  v: ≈5,500
+  src:
+  - wp-falaise
+  check: verified
+  note: Including 1,470 killed.
+- n: pl
+  k: Polish 1st Armoured on Hill 262
+  s: Two battle groups under Maj-Gen Maczek
+events:
+- n: Chambois
+  p: [0.105, 48.805]
+  k: star
+  nat: pl
+  lp: b
+  note: Poles and Americans meet, 19 August
+- n: Hill 262
+  p: [0.15, 48.84]
+  k: clash
+  nat: pl
+  note: Held by the Poles, 19–21 August
+- n: Mantes
+  p: [1.72, 48.99]
+  k: star
+  nat: us
+  note: Seine crossed, 19–20 August
+arrows:
+- n: us
+  pts: [[0, 48.7], [0.06, 48.76], [0.1, 48.8]]
+  w: 2.4
+- n: pl
+  pts: [[0.05, 48.93], [0.12, 48.88], [0.14, 48.845]]
+  w: 2.4
+- n: us
+  pts: [[1.37, 48.74], [1.55, 48.85], [1.72, 49]]
+  w: 2.6
+- n: de
+  pts: [[-0.1, 48.82], [0.3, 48.95], [0.8, 49.2], [1, 49.4]]
+  w: 2
+  dash: 1

@@ -1,44 +1,54 @@
 # Fortress Europe (5 June 1944)
 order: 1
+title: Fortress Europe
 day: -1
 date: 5 June 1944
-title: Fortress Europe
 cam:
   globe: true
-  center: [ -13, 41.5 ]
+  center: [-13, 41.5]
 state: s0
 beaches: false
 body:
-  - Four years after Dunkirk, Hitler’s Atlantic Wall runs from Norway to the Spanish border. The Allies have chosen to strike at Normandy, not the obvious short crossing to the Pas-de-Calais.
-  - After a 24-hour delay for weather, Eisenhower gives the order early on 5 June. The invasion goes in the next morning.
+- Four years after Dunkirk, Hitler’s Atlantic Wall runs from Norway to the Spanish border. The Allies have chosen to strike at Normandy, not the obvious short crossing to the Pas-de-Calais.
+- To keep the Germans looking the wrong way, Operation Fortitude invents a whole army group in south-east England under Patton, made of radio traffic, dummy landing craft and double agents. The German Fifteenth Army waits at the Pas-de-Calais, and many of its units stay there until July.
+- After a 24-hour delay for weather, Eisenhower gives the order early on 5 June. The invasion goes in the next morning.
 forces:
-  - n: all
-    k: Allied divisions committed to Normandy
-    v: "39"
-    s: 22 US, 12 British, 3 Canadian, 1 Polish, 1 French
-    src:
-      - weinberg1994
-    check: verified
-    note: Corrected from 42 (23 US, 14 British). Weinberg gives 39 divisions committed over the whole battle.
-  - n: us
-    k: US troops in Britain
-    v: ≈1.5 million
-    s: Arrived by May 1944
-    src:
-      - wp-overlord
-    check: verified
-    note: Corrected from ≈2.9 million, which is closer to the total of all Allied forces assembled in Britain.
-  - n: de
-    k: German troops in the West
-    v: ≈1 million
-    s: 58 divisions, 10 of them panzer
-    src:
-      - citino-reception
-    check: verified
-    note: Corrected from ≈850,000 and about 60 infantry divisions. Citino estimates about a million men in France and the Low Countries.
-  - n: de
-    k: German troops in Normandy
-    v: ≈80,000
-    s: With a single panzer division, the 21st
-    check: unverified
-    note: Not yet traced to a source. Accounts of German strength in the invasion area vary widely.
+- n: all
+  k: Allied divisions committed to Normandy
+  v: '39'
+  s: 22 US, 12 British, 3 Canadian, 1 Polish, 1 French
+  src:
+  - weinberg1994
+  check: verified
+  note: Corrected from 42 (23 US, 14 British). Weinberg gives 39 divisions committed over the whole battle.
+- n: us
+  k: US troops in Britain
+  v: ≈1.5 million
+  s: Arrived by May 1944
+  src:
+  - wp-overlord
+  check: verified
+  note: Corrected from ≈2.9 million, which is closer to the total of all Allied forces assembled in Britain.
+- n: de
+  k: German troops in the West
+  v: ≈1 million
+  s: 58 divisions, 10 of them panzer
+  src:
+  - citino-reception
+  check: verified
+  note: Corrected from ≈850,000 and about 60 infantry divisions. Citino estimates about a million men in France and the Low Countries.
+- n: de
+  k: Panzer divisions within reach of the beaches
+  v: '1'
+  s: 21st Panzer, near Caen. The strongest armoured reserves cannot move without Hitler’s permission
+  src:
+  - iwm-german-response
+  check: verified
+  note: Replaces an unverified figure of ≈80,000 German troops in Normandy.
+- n: de
+  k: German Fifteenth Army
+  s: Held at the Pas-de-Calais by Operation Fortitude, many units until July
+  src:
+  - iwm-german-response
+  - wp-fortitude
+  check: verified

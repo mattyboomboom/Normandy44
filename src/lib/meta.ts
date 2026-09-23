@@ -12,7 +12,8 @@ export function coverDescription(): string {
 }
 
 export function momentTitle(sc: Scene): string {
-  return `${sc.title}, ${fullDate(sc)} (${dayLabel(sc.day)}) · ${SITE_NAME}`;
+  const name = sc.step ? `${sc.title}: ${sc.step.title}` : sc.title;
+  return `${name}, ${fullDate(sc)} (${dayLabel(sc.day)}) · ${SITE_NAME}`;
 }
 
 /** First sentence(s) of the story, trimmed to a search-result length. */

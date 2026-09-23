@@ -1,0 +1,44 @@
+# Cotentin cut, then the storm (18–22 June)
+order: 9
+title: Cotentin cut, then the storm
+day: 12
+date: 18–22 June
+cam: [[-2, 49.03], [-0.15, 49.74]]
+state: s3
+beaches: true
+body:
+- US 9th Division reaches the west coast at Barneville on 18 June, trapping the German forces in the north of the peninsula around Cherbourg.
+- From 19 to 22 June the worst Channel storm in decades wrecks the American Mulberry harbour off Omaha and throws hundreds of craft onto the beaches. The British Mulberry at Arromanches is damaged but kept working.
+forces:
+- n: us
+  k: US VII Corps drives on Cherbourg
+  s: 4th, 9th and 79th Infantry Divisions
+- n: de
+  k: Defenders of the peninsula
+  s: Remnants of the 709th, 243rd, 91st and 77th Divisions
+- n: uk
+  k: Tilly-sur-Seulles
+  s: Taken by the 50th Division on 19 June after a week of fighting
+events:
+- n: Barneville
+  p: [-1.76, 49.38]
+  k: star
+  nat: us
+  note: West coast reached, 18 June
+- n: Mulberry A (Omaha)
+  p: [-0.87, 49.375]
+  k: storm
+  nat: us
+  note: Destroyed in the storm
+- n: Mulberry B (Arromanches)
+  p: [-0.62, 49.345]
+  k: harbour
+  nat: uk
+  note: Damaged, repaired, used until late autumn
+arrows:
+- n: us
+  pts: [[-1.4, 49.4], [-1.55, 49.39], [-1.74, 49.385]]
+  w: 2.4
+- n: us
+  pts: [[-1.35, 49.47], [-1.45, 49.54], [-1.58, 49.6]]
+  w: 2.4

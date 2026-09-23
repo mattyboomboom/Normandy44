@@ -48,27 +48,95 @@ export const arrow = z.object({
   dash: z.literal(1).optional()
 });
 
+export const unit = z.object({
+  n: nation,
+  k: z.enum(['inf', 'arm', 'mech', 'para', 'kg']),
+  label: z.string().min(1),
+  p: lonLat,
+  size: z.enum(['corps', 'div', 'bde', 'kg']).optional(),
+  lp: z.enum(['r', 'l', 't', 'b']).optional()
+});
+
+export const tacLine = z.object({
+  kind: z.enum(['start', 'objective', 'road', 'ridge', 'front']),
+  pts: z.array(lonLat).min(2),
+  label: z.string().optional(),
+  n: nation.optional()
+});
+
+export const zone = z.object({
+  kind: z.enum(['bomb', 'corridor', 'pocket']),
+  pts: z.array(lonLat).min(3),
+  label: z.string().optional(),
+  n: nation.optional()
+});
+
+export const tacLabel = z.object({ n: z.string().min(1), p: lonLat });
+
+export const armour = z.object({
+  br: z.number().min(0).max(20).nullable(),
+  us: z.number().min(0).max(20).nullable(),
+  tanks: z.object({ br: z.number().int().positive(), us: z.number().int().positive() }).optional(),
+  when: z.string().min(1),
+  src: z.array(z.string()).min(1),
+  note: z.string().optional()
+});
+
 const bbox = z.tuple([lonLat, lonLat]).refine(([sw, ne]) => sw[0] < ne[0] && sw[1] < ne[1], {
   message: 'Camera box must be [[west, south], [east, north]]'
 });
 const globe = z.object({ globe: z.literal(true), center: z.tuple([z.number(), z.number()]) });
 
+const camera = z.union([bbox, globe]);
+/** Key into STATES in src/data/areas.ts */
+const stateKey = z.string().regex(/^s\d+$/);
+
+/** What the map shows at one stop: shared by moments and their steps */
+const mapFields = {
+  events: z.array(mapEvent).optional(),
+  arrows: z.array(arrow).optional(),
+  units: z.array(unit).optional(),
+  lines: z.array(tacLine).optional(),
+  zones: z.array(zone).optional(),
+  labels: z.array(tacLabel).optional()
+};
+
+/** One step of a moment told in several steps (a close-up). */
+export const step = z.object({
+  /** Short name of the step, e.g. "The Scottish Corridor" */
+  title: z.string().min(1),
+  day: z.number().int().min(-1).max(90),
+  date: z.string().min(1),
+  cam: camera,
+  state: stateKey,
+  beaches: z.boolean().optional(),
+  body: z.array(z.string().min(1)).min(1),
+  ...mapFields
+});
+
 export const moment = z.object({
   /** Position in the story, 1-based and without gaps */
   order: z.number().int().positive(),
-  /** Days relative to D-Day (6 June 1944 = 0) */
-  day: z.number().int().min(-1).max(90),
-  date: z.string().min(1),
   title: z.string().min(1),
-  cam: z.union([bbox, globe]),
-  /** Key into STATES in src/data/areas.ts */
-  state: z.string().regex(/^s\d+$/),
-  beaches: z.boolean(),
-  body: z.array(z.string().min(1)).min(1),
   forces: z.array(force).optional(),
   forcesNote: z.string().optional(),
-  events: z.array(mapEvent).optional(),
-  arrows: z.array(arrow).optional()
+  armour: armour.optional(),
+  /** A moment is either a single stop (day, date, cam …) or a list of steps */
+  day: z.number().int().min(-1).max(90).optional(),
+  date: z.string().min(1).optional(),
+  cam: camera.optional(),
+  state: stateKey.optional(),
+  beaches: z.boolean().optional(),
+  body: z.array(z.string().min(1)).min(1).optional(),
+  steps: z.array(step).min(2).optional(),
+  ...mapFields
+}).superRefine((m, ctx) => {
+  const single = ['day', 'date', 'cam', 'state', 'body'] as const;
+  if (m.steps) {
+    for (const k of single) if (m[k] !== undefined) ctx.addIssue({ code: 'custom', message: `"${k}" belongs in each step when a moment has steps`, path: [k] });
+  } else {
+    for (const k of single) if (m[k] === undefined) ctx.addIssue({ code: 'custom', message: `"${k}" is required (or give the moment steps)`, path: [k] });
+  }
 });
 
 export const source = z.object({

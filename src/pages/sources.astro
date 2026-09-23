@@ -5,18 +5,22 @@
 import Page from '../layouts/Page.astro';
 import type { Source } from '../data/types';
 import { loadContent } from '../lib/load';
-import { citedSources } from '../lib/content';
+import { citedSources, firstSteps, momentOf } from '../lib/content';
 import { figureAnchor, momentPath } from '../lib/site';
 import { dayLabel } from '../atlas/panel';
 
-const { scenes, sources } = await loadContent();
+const { scenes: allScenes, sources } = await loadContent();
+const scenes = firstSteps(allScenes);
 const byId = new Map(sources.map(s => [s.id, s]));
-const cited = citedSources(scenes, sources);
+const cited = citedSources(allScenes, sources);
+const withArmour = scenes.filter(sc => sc.armour);
+const fmt = (n: number | null) => (n === null ? 'not recorded' : Number.isInteger(n) ? String(n) : `${Math.floor(n)}½`);
 const citedIds = new Set(cited.map(s => s.id));
 const uncitedOfficial = sources.filter(s => s.kind === 'official' && !citedIds.has(s.id));
 const mapData = sources.filter(s => s.kind === 'data');
 
 const figures = scenes.flatMap((sc, i) => (sc.forces || []).map((f, j) => ({ sc, i, f, j })).filter(x => x.f.check));
+const mid = (sc: typeof scenes[number]) => momentOf(sc);
 const verified = figures.filter(x => x.f.check === 'verified').length;
 const unverified = figures.filter(x => x.f.check === 'unverified');
 
@@ -35,19 +39,36 @@ const fmtDate = (d?: Date) => d ? d.toLocaleDateString('en-GB', { day: 'numeric'
       <>
         <h2>Still to check</h2>
         <ul>
-          {unverified.map(({ sc, f, j }) => <li><a href={`#${figureAnchor(sc.id, j)}`}>{f.k}</a> <span class="dim">({sc.title})</span></li>)}
+          {unverified.map(({ sc, f, j }) => <li><a href={`#${figureAnchor(mid(sc), j)}`}>{f.k}</a> <span class="dim">({sc.title})</span></li>)}
         </ul>
       </>
     )}
+
+    <h2>The balance of armour</h2>
+    <p>Under the day counter, some moments show how many German armoured divisions faced the British and Canadians and how many faced the Americans. It is the clearest single picture of Montgomery's strategy: hold the Germans' armour at Caen so the Americans could break out in the west. Counts are shown only where a source gives them.</p>
+    {withArmour.map(sc => {
+      const a = sc.armour!;
+      return (
+        <div class="fig" id={`armour-${mid(sc)}`}>
+          <span class="k">{sc.title}, {a.when}</span>
+          <div class="dim small">Facing the British and Canadians: {fmt(a.br)}. Facing the Americans: {fmt(a.us)}.{a.tanks && ` About ${a.tanks.br.toLocaleString('en-GB')} tanks against ${a.tanks.us.toLocaleString('en-GB')}.`}</div>
+          <p class="by">Source: {a.src.map((k, n) => {
+            const s = byId.get(k)!;
+            return <>{n > 0 && '; '}<a href={`#src-${k}`}>{shortName(s)}</a>{s.pages && `, p. ${s.pages}`}{s.via && byId.get(s.via) && <span class="dim"> (via {shortName(byId.get(s.via)!)})</span>}</>;
+          })}</p>
+          {a.note && <p class="note">{a.note}</p>}
+        </div>
+      );
+    })}
 
     <h2>Figures, moment by moment</h2>
     {scenes.map((sc, i) => {
       const rows = (sc.forces || []).map((f, j) => ({ f, j })).filter(x => x.f.check);
       return rows.length > 0 && (
-        <section aria-labelledby={`src-h-${sc.id}`}>
-          <h3 id={`src-h-${sc.id}`}><a href={momentPath(sc.id)}>{sc.title}</a> <span class="dim small">{dayLabel(sc.day)}, {sc.date}</span></h3>
+        <section aria-labelledby={`src-h-${mid(sc)}`}>
+          <h3 id={`src-h-${mid(sc)}`}><a href={momentPath(mid(sc))}>{sc.title}</a> <span class="dim small">{dayLabel(sc.day)}, {sc.date}</span></h3>
           {rows.map(({ f, j }) => (
-            <div class="fig" id={figureAnchor(sc.id, j)}>
+            <div class="fig" id={figureAnchor(mid(sc), j)}>
               <span class="k">{f.k}</span><span class="v">{f.v}</span>
               {f.check === 'verified' ? <span class="badge ok">Checked</span> : <span class="badge unv">Unverified</span>}
               {f.s && <div class="dim small">{f.s}</div>}

@@ -1,0 +1,46 @@
+# Cherbourg falls (26 June – 1 July)
+order: 10
+title: Cherbourg falls
+day: 20
+date: 26 June – 1 July
+cam: [[-2.05, 49.05], [-0.95, 49.76]]
+state: s4
+beaches: true
+body:
+- Cherbourg’s commander, von Schlieben, surrenders on 26 June and the last forts fall within days. But the Germans have wrecked the port so thoroughly that it will be weeks before it can handle cargo.
+- In three weeks VII Corps has cleared the whole Cotentin peninsula, taking some 39,000 prisoners.
+forces:
+- n: all
+  k: Landed by 30 June
+  v: 850,279
+  s: With 148,803 vehicles and 570,505 tons of supplies
+  src:
+  - ww2db-normandy
+  check: unverified
+  note: Matches a secondary summary; the primary source (probably the SHAEF build-up returns in the official histories) is still to be traced.
+- n: us
+  k: Prisoners taken in the Cotentin
+  v: ≈39,000
+  src:
+  - utah1947
+  check: verified
+  note: 'Utah Beach to Cherbourg (1947), p. 198: “The Germans had lost 39,000 captured in addition to an undetermined number of killed and wounded.”'
+- n: us
+  k: US VII Corps casualties in the Cotentin
+  v: ≈22,000
+  s: 2,800 killed, 13,500 wounded, 5,700 missing
+  src:
+  - utah1947
+  - wp-cherbourg
+  check: verified
+  note: 'Utah Beach to Cherbourg (1947), p. 198: “a total of over 22,000 casualties”. Corrected earlier from 22,119, which could not be confirmed.'
+events:
+- n: Cherbourg
+  p: [-1.62, 49.64]
+  k: star
+  nat: us
+  note: Surrendered 26 June
+arrows:
+- n: us
+  pts: [[-1.45, 49.49], [-1.55, 49.57], [-1.61, 49.63]]
+  w: 2.4

@@ -6,8 +6,8 @@
 import '../styles/atlas.css';
 import type { Scene } from '../data/types';
 import { withBase } from '../lib/url';
-import { figureHref, momentPath } from '../lib/site';
-import { accentFor, bodyHtml, dayLabel, forcesHeading, forcesHtml, fullDate } from '../atlas/panel';
+import { armourHref, figureHref, scenePath } from '../lib/site';
+import { accentFor, armourHtml, bodyHtml, dayLabel, forcesHeading, forcesHtml, fullDate, stepLabel } from '../atlas/panel';
 
 interface Props {
   scenes: Scene[];
@@ -25,7 +25,7 @@ const data = {
   start: index,
   geo: withBase('data/geo.topo.json'),
   cover: withBase('/'),
-  paths: scenes.map(s => momentPath(s.id)),
+  paths: scenes.map(s => scenePath(s)),
   sourcesPath: withBase('sources/'),
   scenes: scenes.map(s => ({ ...s, forces: s.forces?.map(({ note, ...f }) => f) }))
 };
@@ -56,15 +56,19 @@ const data = {
     <g id="rings" opacity=".62"></g>
     <g id="front" filter="url(#frontline)"></g>
   </g>
+  <g id="tac-under"></g>
   <g id="bombs"></g>
   <g id="beaches"></g>
   <g id="places"></g>
   <g id="arrows"></g>
+  <g id="tac-units"></g>
   <g id="events"></g>
   <g id="sealabels"></g>
 </svg>
 
-<div id="counter" aria-live="polite"><div id="dnum">{dayLabel(scene.day)}</div><div id="ddate">{fullDate(scene)}</div><div id="ashore"></div></div>
+<div id="counter" aria-live="polite"><div id="dnum">{dayLabel(scene.day)}</div><div id="ddate">{fullDate(scene)}</div><div id="ashore"></div>
+  <div id="armour" hidden={cover || !scene.armour} set:html={cover ? '' : armourHtml(scene, armourHref)}></div>
+</div>
 
 <div id="cover">
   <h1 id="brand"><a href={withBase('/')} tabindex={cover ? -1 : 0}>Normandy,<span class="yr"> 1944</span></a></h1>
@@ -84,6 +88,7 @@ const data = {
   <div id="panel-scroll">
     <p id="p-date">{fullDate(scene)}</p>
     <h2 id="p-title">{scene.title}</h2>
+    <p id="p-step" hidden={!scene.step}>{stepLabel(scene)}</p>
     <div id="p-body" set:html={bodyHtml(scene)}></div>
     <section id="forces"><h3 id="f-head">{forcesHeading(scene)}</h3><div id="f-rows" set:html={forcesHtml(scene, figureHref)}></div></section>
     <nav class="p-links" aria-label="More about this atlas"><a href={withBase('story/')}>Read the whole story</a><a href={withBase('about/')}>About this atlas</a><a href={withBase('sources/')}>Sources</a></nav>
@@ -97,6 +102,9 @@ const data = {
   <div class="li"><svg width="18" height="12"><path d="M1 6H12" stroke="#ece7d8" stroke-width="5" stroke-linecap="round" opacity=".55"/><path d="M1 6H12" stroke="#26241f" stroke-width="2.5" stroke-linecap="round"/><path d="M10.5 1.5L17 6L10.5 10.5Z" fill="#26241f" stroke="#ece7d8" stroke-width=".8" stroke-opacity=".6"/></svg>German move</div>
   <div class="li"><span class="sw" style="background:var(--ca)"></span>Canadian control</div>
   <div class="li"><svg width="14" height="14"><rect x="2" y="2" width="10" height="10" fill="#26241f" stroke="#ece7d8" stroke-width="1.5"/></svg>German fortress</div>
+  <div class="li li-tac"><svg width="20" height="14"><rect x="1" y="1" width="18" height="12" fill="#f3efe2" stroke="#b98a2c" stroke-width="1.5"/><path d="M1 1L19 13M1 13L19 1" stroke="#b98a2c" stroke-width="1.2"/></svg>Infantry</div>
+  <div class="li li-tac"><svg width="20" height="14"><rect x="1" y="1" width="18" height="12" fill="#f3efe2" stroke="#26241f" stroke-width="1.5"/><ellipse cx="10" cy="7" rx="6" ry="3.2" fill="none" stroke="#26241f" stroke-width="1.2"/></svg>Armour</div>
+  <div class="li li-tac li-note">Positions approximate</div>
 </div>
 
 <div id="pop" role="tooltip" hidden><b id="pop-t"></b><span id="pop-n"></span></div>

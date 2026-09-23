@@ -1,0 +1,379 @@
+# Operation Goodwood (18 July, dawn – 19–20 July)
+order: 14
+title: Operation Goodwood
+forces:
+- n: uk
+  k: Bombers before the attack
+  v: 2,077
+  s: 1,056 RAF heavy bombers, 539 US heavy bombers, 482 US medium bombers
+  src:
+  - wp-goodwood
+  check: verified
+- n: uk
+  k: British armoured divisions
+  v: '3'
+  s: Guards, 7th and 11th Armoured
+  src:
+  - wp-goodwood
+  check: verified
+- n: uk
+  k: British tanks lost
+  v: 253–469
+  s: Estimates differ widely; many knocked out were recovered and repaired
+  src:
+  - wp-goodwood
+  check: verified
+  note: 'Reynolds: at most 253. Trew: 314, of which 130 destroyed outright. Buckley: about 400 knocked out, many recovered. Tamelander & Zetterling: 469, most repairable. All via Wikipedia.'
+- n: all
+  k: Casualties, Goodwood and Atlantic
+  v: 3,474–5,500
+  src:
+  - wp-goodwood
+  check: verified
+- n: ca
+  k: Operation Atlantic around Verrières Ridge
+  v: 1,300+
+  s: Allied casualties, 18–21 July
+  src:
+  - wp-atlantic
+  check: verified
+- n: de
+  k: German tanks lost
+  v: 75–100
+  src:
+  - wp-goodwood
+  check: verified
+steps:
+- title: The carpet
+  day: 42
+  date: 18 July, dawn
+  cam: [[-0.42, 49.09], [-0.17, 49.25]]
+  state: s7
+  body:
+  - At 05:45 more than a thousand RAF heavy bombers, followed by US heavy and medium bombers, 2,077 aircraft in all, bomb the villages either side of a corridor east of Caen.
+  - At 07:45 the 11th Armoured Division leads out of the Orne bridgehead won by the airborne on D-Day, with the Guards and 7th Armoured queuing behind to cross the few bridges. On the right the Canadians attack Colombelles and the suburbs of Caen (Operation Atlantic).
+  labels:
+  - n: Ranville
+    p: [-0.2644, 49.2277]
+  - n: Escoville
+    p: [-0.2474, 49.2062]
+  - n: Touffréville
+    p: [-0.2255, 49.2022]
+  - n: Sannerville
+    p: [-0.2262, 49.1861]
+  - n: Démouville
+    p: [-0.2606, 49.1751]
+  - n: Cagny
+    p: [-0.2622, 49.1532]
+  - n: Émiéville
+    p: [-0.2254, 49.1549]
+  - n: Grentheville
+    p: [-0.2924, 49.147]
+  - n: Soliers
+    p: [-0.2898, 49.1315]
+  - n: Bourguébus
+    p: [-0.2912, 49.1174]
+  - n: Hubert-Folie
+    p: [-0.3136, 49.1297]
+  - n: Frénouville
+    p: [-0.2463, 49.1314]
+  - n: Colombelles
+    p: [-0.2918, 49.1998]
+  - n: Giberville
+    p: [-0.2863, 49.1765]
+  - n: Ifs
+    p: [-0.3385, 49.1444]
+  - n: Tilly-la-Campagne
+    p: [-0.3044, 49.1119]
+  - n: May-sur-Orne
+    p: [-0.3725, 49.1008]
+  - n: Troarn
+    p: [-0.1844, 49.1941]
+  lines:
+  - kind: ridge
+    label: Bourguébus Ridge
+    pts: [[-0.345, 49.118], [-0.318, 49.124], [-0.292, 49.119], [-0.268, 49.124], [-0.245, 49.12]]
+  - kind: ridge
+    label: Verrières Ridge
+    pts: [[-0.385, 49.103], [-0.36, 49.108], [-0.335, 49.108]]
+  - kind: start
+    label: Start line
+    pts: [[-0.29, 49.212], [-0.26, 49.214], [-0.235, 49.212]]
+  zones:
+  - kind: bomb
+    label: Bombing, 05:45
+    pts: [[-0.305, 49.206], [-0.276, 49.206], [-0.272, 49.172], [-0.3, 49.17]]
+  - kind: bomb
+    pts: [[-0.242, 49.208], [-0.214, 49.208], [-0.214, 49.162], [-0.242, 49.162]]
+  - kind: bomb
+    pts: [[-0.276, 49.161], [-0.249, 49.161], [-0.249, 49.144], [-0.276, 49.144]]
+  units:
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.268, 49.197]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: Guards Armoured
+    p: [-0.252, 49.222]
+    size: div
+  - n: uk
+    k: arm
+    label: 7th Armoured
+    p: [-0.282, 49.232]
+    size: div
+    lp: l
+  - n: uk
+    k: inf
+    label: 3rd Division
+    p: [-0.228, 49.214]
+    size: div
+  - n: ca
+    k: inf
+    label: 3rd Canadian
+    p: [-0.318, 49.194]
+    size: div
+    lp: l
+  - n: de
+    k: inf
+    label: 16th Luftwaffe Field
+    p: [-0.29, 49.186]
+    size: div
+    lp: b
+  - n: de
+    k: kg
+    label: KG von Luck (21st Pz)
+    p: [-0.235, 49.148]
+    size: kg
+  - n: de
+    k: arm
+    label: 1st SS
+    p: [-0.305, 49.106]
+    size: div
+    lp: b
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.195, 49.125]
+    size: div
+  arrows:
+  - n: uk
+    pts: [[-0.266, 49.205], [-0.278, 49.172], [-0.292, 49.148]]
+    w: 2.8
+  - n: ca
+    pts: [[-0.33, 49.205], [-0.34, 49.19], [-0.352, 49.175]]
+    w: 2.2
+- title: The ridge
+  day: 42
+  date: 18 July, midday
+  cam: [[-0.42, 49.09], [-0.17, 49.25]]
+  state: s7
+  body:
+  - By late morning the advance meets the German second line. At Cagny a battery of 88 mm guns and von Luck’s assault guns knock out tank after tank, and ahead the 1st SS Panzer Division holds Bourguébus Ridge.
+  - The 11th Armoured Division, out in the open cornfields under the ridge, loses tanks by the score. The Guards are held at Cagny, and the 7th Armoured is still struggling forward through the traffic behind.
+  labels:
+  - n: Ranville
+    p: [-0.2644, 49.2277]
+  - n: Escoville
+    p: [-0.2474, 49.2062]
+  - n: Touffréville
+    p: [-0.2255, 49.2022]
+  - n: Sannerville
+    p: [-0.2262, 49.1861]
+  - n: Démouville
+    p: [-0.2606, 49.1751]
+  - n: Cagny
+    p: [-0.2622, 49.1532]
+  - n: Émiéville
+    p: [-0.2254, 49.1549]
+  - n: Grentheville
+    p: [-0.2924, 49.147]
+  - n: Soliers
+    p: [-0.2898, 49.1315]
+  - n: Bourguébus
+    p: [-0.2912, 49.1174]
+  - n: Hubert-Folie
+    p: [-0.3136, 49.1297]
+  - n: Frénouville
+    p: [-0.2463, 49.1314]
+  - n: Colombelles
+    p: [-0.2918, 49.1998]
+  - n: Giberville
+    p: [-0.2863, 49.1765]
+  - n: Ifs
+    p: [-0.3385, 49.1444]
+  - n: Tilly-la-Campagne
+    p: [-0.3044, 49.1119]
+  - n: May-sur-Orne
+    p: [-0.3725, 49.1008]
+  - n: Troarn
+    p: [-0.1844, 49.1941]
+  lines:
+  - kind: ridge
+    label: Bourguébus Ridge
+    pts: [[-0.345, 49.118], [-0.318, 49.124], [-0.292, 49.119], [-0.268, 49.124], [-0.245, 49.12]]
+  - kind: ridge
+    label: Verrières Ridge
+    pts: [[-0.385, 49.103], [-0.36, 49.108], [-0.335, 49.108]]
+  units:
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.305, 49.138]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: Guards Armoured
+    p: [-0.255, 49.165]
+    size: div
+  - n: uk
+    k: arm
+    label: 7th Armoured
+    p: [-0.278, 49.188]
+    size: div
+    lp: l
+  - n: ca
+    k: inf
+    label: 3rd Canadian
+    p: [-0.33, 49.185]
+    size: div
+    lp: l
+  - n: de
+    k: kg
+    label: KG von Luck (21st Pz)
+    p: [-0.232, 49.145]
+    size: kg
+  - n: de
+    k: arm
+    label: 1st SS
+    p: [-0.305, 49.106]
+    size: div
+    lp: b
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.195, 49.125]
+    size: div
+  events:
+  - n: Cagny
+    p: [-0.2622, 49.1532]
+    k: clash
+    nat: de
+    note: 88 mm guns and assault guns stop the Guards
+    lp: r
+  - n: Under the ridge
+    p: [-0.31, 49.132]
+    k: clash
+    nat: uk
+    note: 11th Armoured’s leading tanks halted
+    lp: l
+  arrows:
+  - n: de
+    pts: [[-0.3, 49.112], [-0.302, 49.124], [-0.304, 49.132]]
+    w: 2.2
+  - n: uk
+    pts: [[-0.26, 49.178], [-0.258, 49.165], [-0.26, 49.156]]
+    w: 2.2
+- title: Rain on the ridge
+  day: 43
+  date: 19–20 July
+  cam: [[-0.42, 49.09], [-0.17, 49.25]]
+  state: s6
+  body:
+  - The fighting goes on for two more days. The British edge closer to the ridge and the Canadians clear southern Caen, but on the 20th a thunderstorm turns the ground to mud and the Canadian attack on Verrières Ridge is thrown back.
+  - Goodwood costs tanks, which Britain can replace, rather than infantry, which it cannot. Montgomery’s written orders were to “write down” the German armour, and in the week before Cobra the 1st and 12th SS stay at Caen. His messages to Eisenhower had sounded like a breakthrough, though, and Eisenhower felt misled.
+  labels:
+  - n: Ranville
+    p: [-0.2644, 49.2277]
+  - n: Escoville
+    p: [-0.2474, 49.2062]
+  - n: Touffréville
+    p: [-0.2255, 49.2022]
+  - n: Sannerville
+    p: [-0.2262, 49.1861]
+  - n: Démouville
+    p: [-0.2606, 49.1751]
+  - n: Cagny
+    p: [-0.2622, 49.1532]
+  - n: Émiéville
+    p: [-0.2254, 49.1549]
+  - n: Grentheville
+    p: [-0.2924, 49.147]
+  - n: Soliers
+    p: [-0.2898, 49.1315]
+  - n: Bourguébus
+    p: [-0.2912, 49.1174]
+  - n: Hubert-Folie
+    p: [-0.3136, 49.1297]
+  - n: Frénouville
+    p: [-0.2463, 49.1314]
+  - n: Colombelles
+    p: [-0.2918, 49.1998]
+  - n: Giberville
+    p: [-0.2863, 49.1765]
+  - n: Ifs
+    p: [-0.3385, 49.1444]
+  - n: Tilly-la-Campagne
+    p: [-0.3044, 49.1119]
+  - n: May-sur-Orne
+    p: [-0.3725, 49.1008]
+  - n: Troarn
+    p: [-0.1844, 49.1941]
+  lines:
+  - kind: ridge
+    label: Bourguébus Ridge
+    pts: [[-0.345, 49.118], [-0.318, 49.124], [-0.292, 49.119], [-0.268, 49.124], [-0.245, 49.12]]
+  - kind: ridge
+    label: Verrières Ridge
+    pts: [[-0.385, 49.103], [-0.36, 49.108], [-0.335, 49.108]]
+  units:
+  - n: uk
+    k: arm
+    label: 7th Armoured
+    p: [-0.305, 49.137]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.285, 49.145]
+    size: div
+  - n: uk
+    k: arm
+    label: Guards Armoured
+    p: [-0.245, 49.145]
+    size: div
+  - n: ca
+    k: inf
+    label: 2nd Canadian
+    p: [-0.36, 49.125]
+    size: div
+    lp: l
+  - n: de
+    k: arm
+    label: 1st SS
+    p: [-0.32, 49.104]
+    size: div
+    lp: b
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.225, 49.125]
+    size: div
+  events:
+  - n: Verrières Ridge
+    p: [-0.36, 49.108]
+    k: clash
+    nat: ca
+    note: Canadian attack fails in the rain, 20 July
+    lp: l
+  arrows:
+  - n: ca
+    pts: [[-0.36, 49.14], [-0.358, 49.123], [-0.356, 49.112]]
+    w: 2.2
+  - n: de
+    pts: [[-0.34, 49.098], [-0.352, 49.108], [-0.36, 49.12]]
+    w: 2.2

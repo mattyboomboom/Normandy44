@@ -7,7 +7,7 @@ import { easeCubicInOut } from 'd3-ease';
 
 import type { Scene } from '../data/types';
 import { STATES } from '../data/areas';
-import { figureHref } from '../lib/site';
+import { armourHref, figureHref } from '../lib/site';
 import { coverTitle, momentTitle } from '../lib/meta';
 import { loadGeo, type Geo } from './geo';
 import { flightDuration, flightPath, frameCamera, globeScale, panCam, zoomCam, type Cam } from './camera';
@@ -20,6 +20,7 @@ import { Timeline } from './timeline';
 import { Player } from './player';
 import { Router, COVER } from './router';
 import { Cover } from './cover';
+import { TacticalLayer } from './tactical';
 
 /** Data embedded in the page by src/components/Atlas.astro */
 interface AtlasData {
@@ -64,7 +65,8 @@ class Atlas {
   private readonly areas = new AreaLayer(STATES);
   private readonly base: BaseMap;
   private readonly markers: Markers;
-  private readonly panel = new Panel(figureHref);
+  private readonly tactical: TacticalLayer;
+  private readonly panel = new Panel(figureHref, armourHref);
   private readonly timeline: Timeline;
   private readonly player: Player;
   private readonly router: Router;
@@ -84,6 +86,7 @@ class Atlas {
     const scenes = this.scenes = data.scenes;
     this.base = new BaseMap(geo);
     this.markers = new Markers(this.view, this.reduceMotion);
+    this.tactical = new TacticalLayer(this.view, this.reduceMotion);
     addArrowheads(select<SVGSVGElement, unknown>('#map').select('defs'));
     this.timeline = new Timeline(scenes, i => { this.player.stopTimer(); this.goTo(i, { push: true }); });
     this.router = new Router(data.paths, data.cover, i => {
@@ -113,9 +116,10 @@ class Atlas {
     this.areas.render(view);
     this.base.renderLabels(view, {
       showBeaches: !!this.scene && this.scene.beaches,
-      eventPoints: this.arrived ? this.markers.eventPoints(this.scene) : [],
+      eventPoints: this.arrived ? [...this.markers.eventPoints(this.scene), ...this.tactical.points()] : [],
       hiddenPlaces: this.markers.hiddenPlaces
     });
+    this.tactical.render();
     this.markers.render();
   }
 
@@ -163,7 +167,7 @@ class Atlas {
     const sc = scenes[i];
     this.idx = i; this.scene = sc; this.arrived = false;
     this.router.show(i, !!opts.push);
-    this.markers.clear();
+    this.markers.clear(); this.tactical.clear();
     this.panel.fill(sc); this.timeline.set(i);
     if (fromCover || !this.cover.isDocked()) this.cover.dock(!!opts.fresh);
     view.layout(); view.measureBlocked();
@@ -179,7 +183,8 @@ class Atlas {
     const { view } = this;
     this.stopAnim();
     this.markers.hidePop();
-    this.markers.clear();
+    this.markers.clear(); this.tactical.clear();
+    this.panel.setArmour(null);
     this.idx = COVER; this.scene = COVER_SCENE; this.arrived = false;
     this.router.show(COVER, !!opts.push);
     this.timeline.set(COVER);
@@ -200,7 +205,7 @@ class Atlas {
     this.arrived = true;
     this.view.measureBlocked();
     this.areas.showFront(true);
-    if (this.scene) this.markers.build(this.scene);
+    if (this.scene) { this.tactical.build(this.scene); this.markers.build(this.scene); }
     this.render();
     if (this.player.playing) this.player.schedule();
   }

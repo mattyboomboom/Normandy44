@@ -13,10 +13,12 @@ export class Timeline {
     const last = scenes.length - 1;
     this.ticks = scenes.map((sc, i) => {
       const b = document.createElement('button');
-      b.className = 'tick';
+      // later steps of a close-up get a smaller tick
+      b.className = sc.step && sc.step.n > 1 ? 'tick sub' : 'tick';
       b.style.left = (i / last * 100) + '%';
-      b.setAttribute('aria-label', `${sc.date}: ${sc.title}`);
-      b.title = `${sc.date}: ${sc.title}`;
+      const name = sc.step ? `${sc.title}, ${sc.step.title}` : sc.title;
+      b.setAttribute('aria-label', `${sc.date}: ${name}`);
+      b.title = `${sc.date}: ${name}`;
       if (href) b.dataset.href = href(i);
       b.innerHTML = `<i></i><span class="tl">${dayLabel(sc.day)}</span>`;
       b.addEventListener('click', () => onPick(i));

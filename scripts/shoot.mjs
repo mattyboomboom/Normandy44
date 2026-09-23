@@ -21,7 +21,6 @@ if (!base || !out) {
 }
 fs.mkdirSync(out, { recursive: true });
 
-const SCENES = 18;
 const SIZES = {
   desktop: { width: 1440, height: 900 },
   mobile: { width: 390, height: 844 }
@@ -30,15 +29,13 @@ const SIZES = {
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH || undefined
 });
-// Page URL for moment n (1-based)
-let urls = Array.from({ length: SCENES }, (_, i) => `${base}#scene=${i + 1}`);
-if (usePaths) {
-  const p = await browser.newPage();
-  await p.goto(base);
-  const paths = await p.evaluate(() => JSON.parse(document.getElementById('atlas-data').textContent).paths);
-  urls = paths.map(path => new URL(path, base).href);
-  await p.close();
-}
+// Page URL for each stop, read from the site itself
+const probe = await browser.newPage();
+await probe.goto(base);
+const paths = await probe.evaluate(() => JSON.parse(document.getElementById('atlas-data').textContent).paths);
+await probe.close();
+const SCENES = paths.length;
+const urls = usePaths ? paths.map(path => new URL(path, base).href) : paths.map((_, i) => `${base}#scene=${i + 1}`);
 
 for (const [name, viewport] of Object.entries(SIZES)) {
   const ctx = await browser.newContext({ viewport, reducedMotion: 'reduce', deviceScaleFactor: 1 });

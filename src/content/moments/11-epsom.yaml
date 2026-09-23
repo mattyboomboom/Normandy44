@@ -1,0 +1,326 @@
+# Operation Epsom (26 June – 29 June – 1 July)
+order: 11
+title: Operation Epsom
+armour:
+  br: 8
+  us: null
+  when: 30 June
+  src:
+  - stacey1948
+  note: 'Montgomery’s directive of 30 June, quoted by Stacey: Second Army “is now opposed by a formidable array of German Panzer Divisions—eight definitely identified, and possibly more to come.” No count is given for the American front; Stacey’s later history notes that by 8 July about 250 German tanks faced the Americans.'
+forces:
+- n: uk
+  k: VIII Corps
+  v: 60,244
+  s: 15th (Scottish), 43rd (Wessex) and 11th Armoured Divisions
+  src:
+  - jackson2006
+  - wp-epsom
+  check: verified
+- n: uk
+  k: VIII Corps casualties, 26–30 June
+  v: 3,363
+  s: 470 killed, 2,187 wounded, 706 missing
+  src:
+  - wp-epsom
+  check: verified
+- n: de
+  k: German tanks lost, 26 June – 1 July
+  v: ≈125
+  s: Including 25 Tigers and 41 Panthers
+  src:
+  - wp-epsom
+  check: verified
+- n: de
+  k: German armour drawn in
+  s: 12th SS, battle groups of 1st and 2nd SS, then II SS Panzer Corps (9th and 10th SS), which had been gathering for a counter-offensive
+  src:
+  - wp-epsom
+  check: verified
+steps:
+- title: Break-in
+  day: 20
+  date: 26 June
+  cam: [[-0.625, 49.085], [-0.425, 49.205]]
+  state: s3
+  body:
+  - On 25 June the 49th (West Riding) Division attacks on the right flank at Fontenay-le-Pesnel (Operation Martlet), to clear the high ground at Rauray.
+  - At 07:30 on the 26th the 15th (Scottish) Division goes in behind a rolling barrage, with Churchill tanks of the 31st Tank Brigade. By midday it holds Saint-Manvieu and Cheux, and counter-attacks by the 12th SS are driven off.
+  labels:
+  - n: Cheux
+    p: [-0.5247, 49.1669]
+  - n: Saint-Manvieu
+    p: [-0.5025, 49.182]
+  - n: Fontenay-le-Pesnel
+    p: [-0.5856, 49.175]
+  - n: Rauray
+    p: [-0.562, 49.16]
+  - n: Tessel
+    p: [-0.5684, 49.1506]
+  - n: Grainville-sur-Odon
+    p: [-0.5332, 49.1377]
+  - n: Mondrainville
+    p: [-0.5124, 49.141]
+  - n: Tourville-sur-Odon
+    p: [-0.4986, 49.1382]
+  - n: Gavrus
+    p: [-0.5069, 49.1163]
+  - n: Baron-sur-Odon
+    p: [-0.4846, 49.1301]
+  - n: Esquay-Notre-Dame
+    p: [-0.4757, 49.1135]
+  - n: Évrecy
+    p: [-0.5048, 49.0951]
+  - n: Mouen
+    p: [-0.4874, 49.1477]
+  - n: Verson
+    p: [-0.4666, 49.1625]
+  - n: Carpiquet
+    p: [-0.4452, 49.1872]
+  lines:
+  - kind: start
+    label: Start line, 26 June
+    pts: [[-0.6, 49.186], [-0.55, 49.192], [-0.51, 49.194], [-0.47, 49.19]]
+  units:
+  - n: uk
+    k: inf
+    label: 15th (Scottish)
+    p: [-0.513, 49.176]
+    size: div
+  - n: uk
+    k: inf
+    label: 49th (West Riding)
+    p: [-0.592, 49.168]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.528, 49.196]
+    size: div
+    lp: t
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.515, 49.148]
+    size: div
+  - n: de
+    k: arm
+    label: Panzer Lehr
+    p: [-0.605, 49.145]
+    size: div
+    lp: l
+  events:
+  - n: Hill 112
+    p: [-0.462, 49.12]
+    k: target
+    nat: uk
+    note: VIII Corps objective beyond the Odon
+  arrows:
+  - n: uk
+    pts: [[-0.515, 49.19], [-0.518, 49.178], [-0.524, 49.166]]
+    w: 2.6
+  - n: uk
+    pts: [[-0.59, 49.182], [-0.578, 49.17], [-0.565, 49.162]]
+    w: 2.2
+- title: The Scottish Corridor
+  day: 21
+  date: 27–28 June
+  cam: [[-0.625, 49.085], [-0.425, 49.205]]
+  state: s4
+  body:
+  - On the 27th the Argyll and Sutherland Highlanders seize the bridge over the Odon at Tourmauville, and the 11th Armoured Division pushes its tanks down a narrow corridor and across the river.
+  - On the 28th British tanks reach the crest of Hill 112. Battle groups of the 1st SS and 2nd SS Panzer Divisions attack both sides of the corridor and come within a kilometre of cutting it.
+  labels:
+  - n: Cheux
+    p: [-0.5247, 49.1669]
+  - n: Saint-Manvieu
+    p: [-0.5025, 49.182]
+  - n: Fontenay-le-Pesnel
+    p: [-0.5856, 49.175]
+  - n: Rauray
+    p: [-0.562, 49.16]
+  - n: Tessel
+    p: [-0.5684, 49.1506]
+  - n: Grainville-sur-Odon
+    p: [-0.5332, 49.1377]
+  - n: Mondrainville
+    p: [-0.5124, 49.141]
+  - n: Tourville-sur-Odon
+    p: [-0.4986, 49.1382]
+  - n: Gavrus
+    p: [-0.5069, 49.1163]
+  - n: Baron-sur-Odon
+    p: [-0.4846, 49.1301]
+  - n: Esquay-Notre-Dame
+    p: [-0.4757, 49.1135]
+  - n: Évrecy
+    p: [-0.5048, 49.0951]
+  - n: Mouen
+    p: [-0.4874, 49.1477]
+  - n: Verson
+    p: [-0.4666, 49.1625]
+  - n: Carpiquet
+    p: [-0.4452, 49.1872]
+  zones:
+  - kind: corridor
+    n: uk
+    label: Scottish Corridor
+    pts: [[-0.535, 49.182], [-0.505, 49.184], [-0.49, 49.15], [-0.48, 49.126], [-0.5, 49.118], [-0.515, 49.138], [-0.535, 49.16]]
+  units:
+  - n: uk
+    k: inf
+    label: 15th (Scottish)
+    p: [-0.545, 49.163]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.476, 49.124]
+    size: div
+  - n: uk
+    k: inf
+    label: 43rd (Wessex)
+    p: [-0.505, 49.172]
+    size: div
+  - n: de
+    k: kg
+    label: 1st SS (KG Frey)
+    p: [-0.468, 49.152]
+    size: kg
+  - n: de
+    k: kg
+    label: 2nd SS (KG Weidinger)
+    p: [-0.565, 49.142]
+    size: kg
+    lp: l
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.47, 49.103]
+    size: div
+    lp: r
+  events:
+  - n: Tourmauville bridge
+    p: [-0.497, 49.127]
+    k: star
+    nat: uk
+    note: Seized by the Argylls, 27 June
+    lp: l
+  - n: Hill 112
+    p: [-0.462, 49.12]
+    k: clash
+    nat: uk
+    note: Crest reached on 28 June
+  arrows:
+  - n: uk
+    pts: [[-0.51, 49.15], [-0.497, 49.13], [-0.466, 49.121]]
+    w: 2.6
+  - n: de
+    pts: [[-0.462, 49.156], [-0.48, 49.152], [-0.497, 49.15]]
+    w: 2.2
+  - n: de
+    pts: [[-0.575, 49.144], [-0.556, 49.143], [-0.537, 49.142]]
+    w: 2.2
+- title: II SS Panzer Corps strikes
+  day: 23
+  date: 29 June – 1 July
+  cam: [[-0.625, 49.085], [-0.425, 49.205]]
+  state: s4
+  body:
+  - On the afternoon of the 29th the 9th and 10th SS Panzer Divisions, just arrived from the Eastern Front, attack the salient. A map taken from a captured officer gives the British warning.
+  - Dempsey pulls his tanks back off Hill 112 and the line holds. The Germans have used up the only armoured reserve they had, which had been gathering to strike towards Bayeux and the Americans. Rundstedt tells Berlin to make peace, and is replaced.
+  labels:
+  - n: Cheux
+    p: [-0.5247, 49.1669]
+  - n: Saint-Manvieu
+    p: [-0.5025, 49.182]
+  - n: Fontenay-le-Pesnel
+    p: [-0.5856, 49.175]
+  - n: Rauray
+    p: [-0.562, 49.16]
+  - n: Tessel
+    p: [-0.5684, 49.1506]
+  - n: Grainville-sur-Odon
+    p: [-0.5332, 49.1377]
+  - n: Mondrainville
+    p: [-0.5124, 49.141]
+  - n: Tourville-sur-Odon
+    p: [-0.4986, 49.1382]
+  - n: Gavrus
+    p: [-0.5069, 49.1163]
+  - n: Baron-sur-Odon
+    p: [-0.4846, 49.1301]
+  - n: Esquay-Notre-Dame
+    p: [-0.4757, 49.1135]
+  - n: Évrecy
+    p: [-0.5048, 49.0951]
+  - n: Mouen
+    p: [-0.4874, 49.1477]
+  - n: Verson
+    p: [-0.4666, 49.1625]
+  - n: Carpiquet
+    p: [-0.4452, 49.1872]
+  zones:
+  - kind: corridor
+    n: uk
+    pts: [[-0.535, 49.182], [-0.505, 49.184], [-0.49, 49.15], [-0.48, 49.126], [-0.5, 49.118], [-0.515, 49.138], [-0.535, 49.16]]
+  units:
+  - n: uk
+    k: inf
+    label: 15th (Scottish)
+    p: [-0.545, 49.163]
+    size: div
+    lp: l
+  - n: uk
+    k: arm
+    label: 11th Armoured
+    p: [-0.492, 49.14]
+    size: div
+  - n: uk
+    k: inf
+    label: 43rd (Wessex)
+    p: [-0.505, 49.172]
+    size: div
+  - n: de
+    k: arm
+    label: 9th SS
+    p: [-0.575, 49.128]
+    size: div
+    lp: l
+  - n: de
+    k: arm
+    label: 10th SS
+    p: [-0.49, 49.098]
+    size: div
+    lp: r
+  - n: de
+    k: arm
+    label: 12th SS
+    p: [-0.455, 49.108]
+    size: div
+    lp: r
+  events:
+  - n: Hill 112
+    p: [-0.462, 49.12]
+    k: clash
+    nat: de
+    note: Given up on 29–30 June; fought over until August
+  - n: Gavrus
+    p: [-0.5069, 49.1163]
+    k: point
+    nat: de
+    note: Retaken by 10th SS
+    lp: l
+  arrows:
+  - n: de
+    pts: [[-0.585, 49.122], [-0.558, 49.138], [-0.535, 49.152]]
+    w: 2.6
+  - n: de
+    pts: [[-0.495, 49.092], [-0.503, 49.105], [-0.507, 49.115]]
+    w: 2.4
+  - n: uk
+    pts: [[-0.465, 49.121], [-0.477, 49.128], [-0.487, 49.134]]
+    w: 2
+    dash: 1

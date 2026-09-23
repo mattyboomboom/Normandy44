@@ -5,21 +5,37 @@ import fs from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
 import { moment, source, force } from '../../src/content/schema';
-import { checkContent, citedSources } from '../../src/lib/content';
+import { checkContent, checkMomentOrder, citedSources, flattenMoments, firstSteps, type MomentData } from '../../src/lib/content';
 import { STATES } from '../../src/data/areas';
 import type { Scene, Source } from '../../src/data/types';
 
 const root = path.resolve(__dirname, '../../src/content');
 const files = fs.readdirSync(path.join(root, 'moments')).filter(f => f.endsWith('.yaml')).sort();
-const scenes: Scene[] = files.map(f => ({
+const moments = files.map(f => ({
   id: f.replace(/^\d+-/, '').replace(/\.yaml$/, ''),
-  ...moment.parse(YAML.parse(fs.readFileSync(path.join(root, 'moments', f), 'utf8')))
-}) as Scene);
+  data: moment.parse(YAML.parse(fs.readFileSync(path.join(root, 'moments', f), 'utf8'))) as MomentData
+}));
+const scenes: Scene[] = flattenMoments(moments);
 const sources: Source[] = (YAML.parse(fs.readFileSync(path.join(root, 'sources.yaml'), 'utf8')) as unknown[]).map(s => source.parse(s) as Source);
 
 describe('content files', () => {
-  it('has 18 moments that all match the schema', () => {
-    expect(scenes).toHaveLength(18);
+  it('has 21 moments that all match the schema, with the close-ups expanded into steps', () => {
+    expect(moments).toHaveLength(21);
+    expect(checkMomentOrder(moments)).toEqual([]);
+    expect(firstSteps(scenes)).toHaveLength(21);
+    expect(scenes.length).toBeGreaterThan(21);
+  });
+
+  it('expands a stepped moment into numbered steps with its own ids', () => {
+    const epsom = scenes.filter(s => s.step?.moment === 'epsom');
+    expect(epsom.map(s => s.id)).toEqual(['epsom', 'epsom-2', 'epsom-3']);
+    expect(epsom.map(s => s.step!.n)).toEqual([1, 2, 3]);
+    expect(epsom.every(s => s.forces === epsom[0].forces)).toBe(true);
+  });
+
+  it('opens on the eve of D-Day', () => {
+    expect(scenes[0].id).toBe('eve');
+    expect(scenes[0].day).toBe(-1);
   });
 
   it('passes the cross-checks (sources, area states, order, ids)', () => {
@@ -43,7 +59,7 @@ describe('content files', () => {
 });
 
 describe('schema and cross-checks catch mistakes', () => {
-  const base = scenes[1];
+  const base = moments[2].data; // a single-stop moment
 
   it('rejects a figure with no check status', () => {
     expect(force.safeParse({ n: 'us', k: 'Troops', v: '1,000' }).success).toBe(false);
@@ -62,6 +78,12 @@ describe('schema and cross-checks catch mistakes', () => {
     expect(moment.safeParse(bad).success).toBe(false);
   });
 
+  it('rejects a moment that mixes steps with single-stop fields', () => {
+    const epsom = moments.find(m => m.id === 'epsom')!.data;
+    expect(moment.safeParse({ ...epsom, day: 20 }).success).toBe(false);
+    expect(moment.safeParse({ ...base, steps: undefined, day: undefined }).success).toBe(false);
+  });
+
   it('rejects a camera box given the wrong way round', () => {
     expect(moment.safeParse({ ...base, cam: [[0.2, 49.52], [-1.55, 49.16]] }).success).toBe(false);
   });
@@ -69,11 +91,13 @@ describe('schema and cross-checks catch mistakes', () => {
   it('flags an unknown source, an unknown area state and a gap in the order', () => {
     const broken: Scene[] = scenes.map(s => ({ ...s }));
     broken[3] = { ...broken[3], state: 's99', forces: [{ n: 'us', k: 'X', v: '1', src: ['nope'], check: 'verified' }] };
-    broken[5] = { ...broken[5], order: 9 };
+    broken[4] = { ...broken[4], armour: { br: 1, us: 0, when: 'x', src: ['nada'] } };
     const errors = checkContent(broken, sources, Object.keys(STATES)).join('\n');
     expect(errors).toMatch(/unknown source "nope"/);
+    expect(errors).toMatch(/armour count: unknown source "nada"/);
     expect(errors).toMatch(/unknown area state "s99"/);
-    expect(errors).toMatch(/order is 9, expected 6/);
+    const gap = moments.map((m, i) => (i === 5 ? { ...m, data: { ...m.data, order: 9 } } : m));
+    expect(checkMomentOrder(gap).join('\n')).toMatch(/expected 6/);
   });
 
   it('flags a moment id that would clash with a site page', () => {

@@ -1,0 +1,58 @@
+# Half of Caen (4–11 July)
+order: 12
+title: Half of Caen
+day: 33
+date: 4–11 July
+cam: [[-0.75, 49.06], [-0.15, 49.29]]
+state: s5
+beaches: true
+body:
+- Canadians take Carpiquet on 4 July. On the evening of the 7th, some 450 heavy bombers flatten much of the old city, and Operation Charnwood clears Caen north of the Orne by 9 July.
+- 'On the 10th the 43rd (Wessex) Division attacks Hill 112 again (Operation Jupiter). The hill ends up in no man’s land, but II SS Panzer Corps is ground down: the 10th SS Panzer Division falls from about 15,000 men to under 2,300.'
+forces:
+- n: uk
+  k: Operation Charnwood
+  s: British 3rd and 59th, 3rd Canadian Divisions
+- n: de
+  k: Defending Caen
+  s: 12th SS Hitlerjugend and 16th Luftwaffe Field Division
+- n: uk
+  k: 'Operation Jupiter: 43rd (Wessex) casualties'
+  v: ≈2,000
+  s: ≈7,000 between 10 and 22 July
+  src:
+  - wp-jupiter
+  check: verified
+- n: de
+  k: 10th SS Panzer Division after Jupiter
+  v: 2,289
+  s: Men left, of about 15,000
+  src:
+  - wp-jupiter
+  check: verified
+events:
+- n: Caen
+  p: [-0.37, 49.183]
+  k: star
+  nat: uk
+  note: Northern half taken, 9 July
+- n: Carpiquet
+  p: [-0.44, 49.185]
+  k: point
+  nat: ca
+  note: Operation Windsor, 4 July
+- n: Hill 112
+  p: [-0.462, 49.12]
+  k: clash
+  nat: uk
+  note: Operation Jupiter, 10–11 July
+arrows:
+- n: ca
+  pts: [[-0.47, 49.21], [-0.44, 49.2], [-0.4, 49.185]]
+  w: 2.2
+- n: uk
+  pts: [[-0.36, 49.235], [-0.36, 49.21], [-0.365, 49.19]]
+  w: 2.2
+- n: uk
+  pts: [[-0.49, 49.142], [-0.476, 49.13], [-0.463, 49.122]]
+  w: 2.2

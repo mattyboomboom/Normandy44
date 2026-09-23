@@ -71,6 +71,64 @@ export interface Arrow {
 
 export type Camera = [LonLat, LonLat] | { globe: true; center: LonLat };
 
+/** Kind of formation, drawn as a simplified military map symbol. */
+export type UnitKind = 'inf' | 'arm' | 'mech' | 'para' | 'kg';
+
+/** A formation shown on a close-up map. Positions are approximate. */
+export interface Unit {
+  n: Nation;
+  k: UnitKind;
+  /** e.g. "15th (Scottish)", "12th SS" */
+  label: string;
+  p: LonLat;
+  /** Echelon mark above the symbol */
+  size?: 'corps' | 'div' | 'bde' | 'kg';
+  /** Label position: right (default), left, top, bottom */
+  lp?: 'r' | 'l' | 't' | 'b';
+}
+
+/** A line on a close-up map: start line, objective, road, ridge. */
+export interface TacLine {
+  kind: 'start' | 'objective' | 'road' | 'ridge' | 'front';
+  pts: LonLat[];
+  label?: string;
+  n?: Nation;
+}
+
+/** A shaded area on a close-up map: bombing zone, corridor, pocket. */
+export interface Zone {
+  kind: 'bomb' | 'corridor' | 'pocket';
+  pts: LonLat[];
+  label?: string;
+  n?: Nation;
+}
+
+/** A village or feature named only on a close-up map. */
+export interface TacLabel { n: string; p: LonLat }
+
+/** German armoured divisions facing each Allied army at a moment. */
+export interface Armour {
+  /** Facing the British and Canadians (null: not recorded) */
+  br: number | null;
+  /** Facing the Americans (null: not recorded) */
+  us: number | null;
+  tanks?: { br: number; us: number };
+  /** When the count applies, e.g. "25 July" */
+  when: string;
+  src: string[];
+  note?: string;
+}
+
+/** Where a scene sits inside a moment that is told in several steps. */
+export interface StepInfo {
+  /** 1-based */
+  n: number;
+  of: number;
+  title: string;
+  /** id of the moment the step belongs to */
+  moment: string;
+}
+
 export interface Scene {
   /** URL slug, from the content file name (01-eve.yaml -> eve) */
   id: string;
@@ -89,6 +147,13 @@ export interface Scene {
   forcesNote?: string;
   events?: MapEvent[];
   arrows?: Arrow[];
+  units?: Unit[];
+  lines?: TacLine[];
+  zones?: Zone[];
+  labels?: TacLabel[];
+  armour?: Armour;
+  /** Set when the moment is told in steps */
+  step?: StepInfo;
 }
 
 /** A bibliography entry (src/content/sources.yaml). */

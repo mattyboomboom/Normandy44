@@ -1,0 +1,25 @@
+---
+// One page per moment, e.g. /cobra/. Each is the full atlas, opening
+// directly on that moment (on its first step, for a close-up).
+import Base from '../../layouts/Base.astro';
+import Atlas from '../../components/Atlas.astro';
+import { loadContent } from '../../lib/load';
+import { momentOf } from '../../lib/content';
+import { momentDescription, momentTitle } from '../../lib/meta';
+
+export async function getStaticPaths() {
+  const { scenes } = await loadContent();
+  return scenes
+    .map((sc, i) => ({ sc, i }))
+    .filter(({ sc }) => !sc.step || sc.step.n === 1)
+    .map(({ sc, i }) => ({ params: { moment: momentOf(sc) }, props: { index: i } }));
+}
+
+const { index } = Astro.props;
+const { scenes } = await loadContent();
+const sc = scenes[index];
+---
+<Base title={momentTitle(sc)} description={momentDescription(sc)} path={`${momentOf(sc)}/`}
+  image={`og/${sc.id}.png`} imageAlt={`Map: ${sc.title}, ${sc.date}`} bodyClass="atlas docked" preloadMap>
+  <Atlas scenes={scenes} index={index} />
+</Base>

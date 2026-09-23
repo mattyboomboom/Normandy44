@@ -1,0 +1,62 @@
+# The Falaise pocket (13–17 August)
+order: 18
+title: The Falaise pocket
+day: 71
+date: 13–17 August
+cam: [[-1.25, 48.45], [0.55, 49.18]]
+state: s10
+beaches: false
+body:
+- Patton’s XV Corps swings north through Le Mans and Alençon to Argentan by 13 August, where Bradley halts it at the army-group boundary. The Canadians and Poles push south in Operation Tractable and take Falaise on 16–17 August.
+- Between them the German Seventh Army and Fifth Panzer Army are nearly surrounded. Hitler finally allows a retreat. On 15 August a second Allied invasion lands in Provence.
+forces:
+- n: all
+  k: Allied forces around the pocket
+  v: ≈580,000
+  s: 23 divisions, ≈3,000 tanks and assault guns
+  src:
+  - wp-falaise
+  check: verified
+- n: de
+  k: Germans inside or near it
+  v: ≈200,000
+  s: Remnants of 24 divisions
+  src:
+  - wp-falaise
+  check: verified
+- n: us
+  k: Argentan
+  s: US XV Corps halted here, 13 August
+- n: ca
+  k: Falaise
+  s: Taken by 2nd Canadian Division, 16–17 August
+events:
+- n: Falaise
+  p: [-0.197, 48.893]
+  k: star
+  nat: ca
+  note: Taken 16–17 August
+- n: Argentan
+  p: [-0.02, 48.745]
+  k: target
+  nat: us
+  note: US halt line, 13 August
+- n: The gap
+  p: [0.02, 48.82]
+  k: gap
+  nat: de
+  note: German escape route east
+arrows:
+- n: us
+  pts: [[0.2, 48], [0.12, 48.42], [0, 48.7]]
+  w: 3
+- n: ca
+  pts: [[-0.28, 49.02], [-0.22, 48.96], [-0.19, 48.905]]
+  w: 2.6
+- n: pl
+  pts: [[-0.1, 49], [-0.02, 48.93], [0.04, 48.86]]
+  w: 2.4
+- n: de
+  pts: [[-0.35, 48.78], [-0.1, 48.8], [0.25, 48.84]]
+  w: 2.4
+  dash: 1

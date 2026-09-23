@@ -163,6 +163,121 @@
   accessed: 2026-09-23
   note: Build-up to 30 June. A secondary summary; the primary figure is still to be traced.
 
+- id: stacey1948
+  kind: official
+  author: C. P. Stacey
+  title: "The Canadian Army 1939–1945: An Official Historical Summary"
+  publisher: King's Printer, Ottawa
+  year: 1948
+  pages: "194–195, 200"
+  url: https://www.ibiblio.org/hyperwar/UN/Canada/CA/OpSumm/OpSumm-12.html
+  accessed: 2026-09-23
+  note: Quotes Montgomery's directive of 30 June 1944 and gives the panzer divisions facing Second Army.
+
+- id: utah1947
+  kind: official
+  author: US War Department, Historical Division
+  title: "Utah Beach to Cherbourg, 6–27 June 1944 (American Forces in Action)"
+  publisher: US Government Printing Office
+  year: 1947
+  pages: "198"
+  url: https://www.ibiblio.org/hyperwar/USA/USA-A-Utah/USA-A-Utah-11.html
+  accessed: 2026-09-23
+  note: VII Corps casualties and German prisoners in the Cotentin.
+
+- id: hastings1984
+  kind: book
+  author: Max Hastings
+  title: "Overlord: D-Day and the Battle for Normandy"
+  publisher: Michael Joseph
+  year: 1984
+  pages: "236 (2006 edn)"
+  via: wp-cobra
+  note: German armour facing each army on the eve of Cobra.
+
+- id: williams2004
+  kind: book
+  author: Andrew Williams
+  title: "D-Day to Berlin"
+  publisher: Hodder & Stoughton
+  year: 2004
+  pages: "174, 185"
+  via: wp-goodwood
+  note: Panzer divisions facing each army at the end of July; Eisenhower's reaction to Goodwood.
+
+- id: iwm-tactics
+  kind: web
+  author: Imperial War Museums
+  title: Tactics and the cost of victory in Normandy
+  url: https://www.iwm.org.uk/history/tactics-and-the-cost-of-victory-in-normandy
+  accessed: 2026-09-23
+  note: British infantry casualty rates and the manpower shortage.
+
+- id: iwm-german-response
+  kind: web
+  author: Imperial War Museums
+  title: The German response to D-Day
+  url: https://www.iwm.org.uk/history/the-german-response-to-d-day
+  accessed: 2026-09-23
+  note: Fortitude's effect on Fifteenth Army; control of the panzer reserves.
+
+- id: wp-goodwood
+  kind: web
+  author: Wikipedia
+  title: Operation Goodwood
+  url: https://en.wikipedia.org/wiki/Operation_Goodwood
+  accessed: 2026-09-23
+
+- id: wp-jupiter
+  kind: web
+  author: Wikipedia
+  title: Operation Jupiter (1944)
+  url: https://en.wikipedia.org/wiki/Operation_Jupiter_(1944)
+  accessed: 2026-09-23
+
+- id: wp-atlantic
+  kind: web
+  author: Wikipedia
+  title: Operation Atlantic
+  url: https://en.wikipedia.org/wiki/Operation_Atlantic
+  accessed: 2026-09-23
+
+- id: wp-bluecoat
+  kind: web
+  author: Wikipedia
+  title: Operation Bluecoat
+  url: https://en.wikipedia.org/wiki/Operation_Bluecoat
+  accessed: 2026-09-23
+
+- id: wp-fortitude
+  kind: web
+  author: Wikipedia
+  title: Operation Fortitude
+  url: https://en.wikipedia.org/wiki/Operation_Fortitude
+  accessed: 2026-09-23
+
+- id: wp-montgomery
+  kind: web
+  author: Wikipedia
+  title: Bernard Montgomery
+  url: https://en.wikipedia.org/wiki/Bernard_Montgomery
+  accessed: 2026-09-23
+  note: Montgomery's pre-invasion plan and the argument over Caen.
+
+- id: wp-saint-lo
+  kind: web
+  author: Wikipedia
+  title: Battle of Saint-Lô
+  url: https://en.wikipedia.org/wiki/Battle_of_Saint-L%C3%B4
+  accessed: 2026-09-23
+
+- id: wp-rhino
+  kind: web
+  author: Wikipedia
+  title: Rhino tank
+  url: https://en.wikipedia.org/wiki/Rhino_tank
+  accessed: 2026-09-23
+
 # Official histories: the standard accounts, for further reading and for
 # tracing figures that are still marked unverified.
 
@@ -202,6 +317,9 @@
   title: "The Victory Campaign: The Operations in North-West Europe, 1944–1945 (Official History of the Canadian Army in the Second World War, Volume III)"
   publisher: Queen's Printer, Ottawa
   year: 1960
+  pages: "165, 185, 193"
+  url: https://www.ibiblio.org/hyperwar/UN/Canada/CA/Victory/Victory-8.html
+  accessed: 2026-09-23
 
 # Map data
 
