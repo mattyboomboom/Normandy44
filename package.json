@@ -38,6 +38,7 @@
     "@types/d3-timer": "^3.0.2",
     "@types/d3-transition": "^3.0.9",
     "@types/d3-zoom": "^3.0.8",
+    "@types/node": "^22.20.4",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
     "pixelmatch": "^7.2.0",

@@ -4,6 +4,7 @@ import { feature } from 'topojson-client';
 import type { Topology, GeometryObject } from 'topojson-specification';
 import type { Geometry, MultiLineString, MultiPolygon, FeatureCollection, LineString } from 'geojson';
 import type { LonLat, RingKey } from '../data/types';
+import { withBase } from '../lib/url';
 
 export interface Geo {
   world: MultiPolygon;
@@ -15,7 +16,7 @@ export interface Geo {
   beaches: Record<RingKey, LonLat[]>;
 }
 
-export const GEO_URL = '/data/geo.topo.json';
+export const GEO_URL = withBase('data/geo.topo.json');
 
 export async function loadGeo(url = GEO_URL): Promise<Geo> {
   const res = await fetch(url);

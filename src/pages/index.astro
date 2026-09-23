@@ -3,6 +3,7 @@
 // timeline are filled in by src/atlas/main.ts once the map data has loaded.
 import '../styles/fonts.css';
 import '../styles/atlas.css';
+import { withBase } from '../lib/url';
 
 const title = 'Normandy 1944 — 85 days from the beaches to the Seine';
 const description = 'An animated, interactive map of the Battle of Normandy, 6 June to 30 August 1944.';
@@ -15,8 +16,8 @@ const description = 'An animated, interactive map of the Battle of Normandy, 6 J
 <title>{title}</title>
 <meta name="description" content={description}>
 <meta name="theme-color" content="#182530">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/data/geo.topo.json" as="fetch" crossorigin>
+<link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml">
+<link rel="preload" href={withBase('data/geo.topo.json')} as="fetch" crossorigin>
 </head>
 <body>
 <svg id="map" role="img" aria-label="Animated map of the Normandy campaign">

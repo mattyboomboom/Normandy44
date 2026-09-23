@@ -10,7 +10,7 @@ Built with [Astro](https://astro.build) and TypeScript, rendered with d3. Needs 
 
 ```sh
 npm install
-npm run dev        # local dev server at http://localhost:4321
+npm run dev        # local dev server at http://localhost:4321/Normandy44/
 npm run build      # static site in dist/
 npm run preview    # serve the built site
 npm run check      # type-check
@@ -18,7 +18,11 @@ npm run check      # type-check
 
 ## Deploying
 
-The site is static and deploys to Vercel as-is: import the GitHub repo in Vercel, keep the detected **Astro** framework preset and the default build settings. Every push to a branch gets a preview URL; `main` goes to production. `vercel.json` sets long cache lifetimes for the hashed assets and the map data.
+The site is published to GitHub Pages at <https://mattyboomboom.github.io/Normandy44/>. Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it; progress shows in the repo's **Actions** tab. (Repo **Settings → Pages → Source** must be set to **GitHub Actions**.)
+
+Because Pages serves the site from the `/Normandy44/` sub-folder, `astro.config.mjs` sets that as the base path. Links to files in `public/` must go through `withBase()` from `src/lib/url.ts`, or they will break there.
+
+To host at the root of a domain instead (a custom domain on Pages, or Vercel), build with `SITE_URL=https://your-domain` and `BASE_PATH=/`. For a custom domain on Pages, also add a `public/CNAME` file containing the domain. `vercel.json` is kept for a possible move to Vercel.
 
 ## Project layout
 
@@ -32,6 +36,7 @@ src/
   data/areas.ts         outlines of each landing force's area of control over time
   data/places.ts        town and sea labels with the zoom level they appear at
   data/*.ts             nation colours, hand-traced rivers, troops-ashore series, types
+  lib/url.ts            withBase(): prefixes links with the base path
   styles/               atlas styles and self-hosted fonts
   fonts/                woff2 files (Latin subsets)
 public/data/geo.topo.json   base map, generated (see below)
@@ -50,7 +55,7 @@ To edit the story, change `src/data/scenes.ts`. To change the base map, edit `da
 ```sh
 npx playwright install chromium   # first time only
 npm run build && npm run preview  # in one terminal
-npm run shots -- http://localhost:4321/ tests/visual/current
+npm run shots -- http://localhost:4321/Normandy44/ tests/visual/current
 npm run compare -- tests/visual/baseline tests/visual/current
 ```
 
@@ -63,7 +68,7 @@ npm run compare -- tests/visual/baseline tests/visual/current
 - Click any point on the timeline to jump there.
 - Drag to pan and scroll or pinch to zoom; stepping to another moment resets the view.
 - Click an event marker on the map for a short note about it.
-- Each moment has its own link, e.g. `/#scene=12` opens Operation Cobra.
+- Each moment has its own link, e.g. `#scene=12` opens Operation Cobra.
 
 ## Sources and caveats
 
