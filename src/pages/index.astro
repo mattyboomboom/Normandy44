@@ -1,0 +1,100 @@
+---
+// The atlas page. Markup is unchanged from the prototype; the map, panel and
+// timeline are filled in by src/atlas/main.ts once the map data has loaded.
+import '../styles/fonts.css';
+import '../styles/atlas.css';
+
+const title = 'Normandy 1944 — 85 days from the beaches to the Seine';
+const description = 'An animated, interactive map of the Battle of Normandy, 6 June to 30 August 1944.';
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta name="theme-color" content="#182530">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/data/geo.topo.json" as="fetch" crossorigin>
+</head>
+<body>
+<svg id="map" role="img" aria-label="Animated map of the Normandy campaign">
+  <defs>
+    <filter id="frontline" x="-5%" y="-5%" width="110%" height="110%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="1.8" result="d"/>
+      <feComposite in="d" in2="SourceAlpha" operator="out" result="o"/>
+      <feFlood flood-color="#1c1a15" result="c"/>
+      <feComposite in="c" in2="o" operator="in"/>
+    </filter>
+    <clipPath id="clip-fr"><use href="#land-fr"/></clipPath>
+    <clipPath id="clip-world" clip-rule="evenodd"><path id="world-hole" clip-rule="evenodd"/></clipPath>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#8a2a1f" stroke-width="2"/>
+    </pattern>
+    <g id="markers"></g>
+  </defs>
+  <path class="sea" id="sphere"/>
+  <path class="grat" id="grat"/>
+  <g clip-path="url(#clip-world)"><path class="world" id="world"/></g>
+  <path class="borders" id="borders"/>
+  <path class="land-other" id="land-other"/>
+  <path class="land-fr" id="land-fr"/>
+  <g id="rivers"></g>
+  <g clip-path="url(#clip-fr)">
+    <g id="rings" opacity=".62"></g>
+    <g id="front" filter="url(#frontline)"></g>
+  </g>
+  <g id="bombs"></g>
+  <g id="beaches"></g>
+  <g id="places"></g>
+  <g id="arrows"></g>
+  <g id="events"></g>
+  <g id="sealabels"></g>
+</svg>
+
+<div id="counter" aria-live="polite"><div id="dnum">D−1</div><div id="ddate">5 June 1944</div><div id="ashore"></div></div>
+
+<div id="intro">
+  <h1>Normandy, 1944</h1>
+  <p>Eighty-five days from the beaches to the Seine: how the Allies landed, held on, broke out and trapped two German armies.</p>
+  <div class="go">
+    <button class="btn primary" id="btn-begin">Play the campaign</button>
+    <button class="btn" id="btn-step">Step through</button>
+  </div>
+</div>
+
+<aside id="panel" aria-live="polite">
+  <button id="p-toggle" aria-expanded="false">More</button>
+  <div id="panel-scroll">
+    <p id="p-date"></p>
+    <h2 id="p-title"></h2>
+    <div id="p-body"></div>
+    <section id="forces"><h3 id="f-head">Troops and formations (approximate)</h3><div id="f-rows"></div></section>
+  </div>
+</aside>
+
+<div id="legend" aria-label="Map key">
+  <div class="li"><span class="sw" style="background:var(--us)"></span>US control</div>
+  <div class="li"><span class="ln"></span>Front line</div>
+  <div class="li"><span class="sw" style="background:var(--uk)"></span>British control</div>
+  <div class="li"><svg width="18" height="12"><path d="M1 6H12" stroke="#ece7d8" stroke-width="5" stroke-linecap="round" opacity=".55"/><path d="M1 6H12" stroke="#26241f" stroke-width="2.5" stroke-linecap="round"/><path d="M10.5 1.5L17 6L10.5 10.5Z" fill="#26241f" stroke="#ece7d8" stroke-width=".8" stroke-opacity=".6"/></svg>German move</div>
+  <div class="li"><span class="sw" style="background:var(--ca)"></span>Canadian control</div>
+  <div class="li"><svg width="14" height="14"><rect x="2" y="2" width="10" height="10" fill="#26241f" stroke="#ece7d8" stroke-width="1.5"/></svg>German fortress</div>
+</div>
+
+<div id="pop" role="tooltip" hidden><b id="pop-t"></b><span id="pop-n"></span></div>
+<nav id="bar" aria-label="Campaign timeline">
+  <button class="ctl" id="prev" aria-label="Previous moment"><svg viewBox="0 0 20 20"><path d="M13 3L6 10L13 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="ctl play" id="play" aria-label="Play"><svg viewBox="0 0 20 20" id="play-ico"><path d="M6 3.5L16 10L6 16.5Z" fill="currentColor"/></svg></button>
+  <button class="ctl" id="next" aria-label="Next moment"><svg viewBox="0 0 20 20"><path d="M7 3L14 10L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div id="track"><div id="rail"></div><div id="fill"></div></div>
+  <div id="count"></div>
+</nav>
+
+<script>
+  import { start } from '../atlas/main';
+  start();
+</script>
+</body>
+</html>
