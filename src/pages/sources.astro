@@ -45,7 +45,7 @@ const fmtDate = (d?: Date) => d ? d.toLocaleDateString('en-GB', { day: 'numeric'
       const rows = (sc.forces || []).map((f, j) => ({ f, j })).filter(x => x.f.check);
       return rows.length > 0 && (
         <section aria-labelledby={`src-h-${sc.id}`}>
-          <h3 id={`src-h-${sc.id}`}><a href={momentPath(sc.id, i)}>{sc.title}</a> <span class="dim small">{dayLabel(sc.day)}, {sc.date}</span></h3>
+          <h3 id={`src-h-${sc.id}`}><a href={momentPath(sc.id)}>{sc.title}</a> <span class="dim small">{dayLabel(sc.day)}, {sc.date}</span></h3>
           {rows.map(({ f, j }) => (
             <div class="fig" id={figureAnchor(sc.id, j)}>
               <span class="k">{f.k}</span><span class="v">{f.v}</span>

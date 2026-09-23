@@ -46,18 +46,42 @@ body{background:var(--sea-deep);color:var(--ink);font-family:var(--serif);overfl
 #ashore b{font-family:var(--stencil);font-weight:800;font-size:20px;color:var(--ink);letter-spacing:.01em}
 #ddate{font-family:var(--serif);font-size:clamp(15px,1.4vw,19px);margin-top:.5em;color:var(--ink);text-shadow:0 1px 8px rgba(0,0,0,.6)}
 
-/* Intro title on the globe */
-#intro{position:fixed;left:clamp(16px,3vw,40px);bottom:calc(var(--bar-h) + 28px);max-width:32rem;z-index:3;transition:opacity .8s;background:rgba(22,32,39,.86);padding:22px 26px 24px;border-radius:2px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
-#intro h1{font-family:var(--stencil);font-weight:800;font-size:clamp(38px,5.2vw,72px);line-height:.9;margin:0 0 .3em;letter-spacing:.005em}
-#intro p{font-size:17px;line-height:1.5;margin:0 0 1.1em;color:var(--ink-dim);max-width:26rem}
-#intro .go{display:flex;gap:.6rem;flex-wrap:wrap}
+/* Front page: the title over the globe. On starting, the title docks as a
+   small wordmark (bottom left on desktop, top right on phones); the transform
+   that gets it there is measured in src/atlas/cover.ts. */
+#cover{position:fixed;left:clamp(20px,5vw,72px);top:clamp(64px,15vh,150px);z-index:4;max-width:min(40rem,calc(100vw - 40px));pointer-events:none}
+#brand{margin:0;font-family:var(--stencil);font-weight:800;font-size:clamp(56px,8.2vw,136px);line-height:.86;letter-spacing:.005em;white-space:nowrap;transform-origin:0 0;
+  transition:transform 1s cubic-bezier(.65,0,.25,1);text-shadow:0 0 2px rgba(16,24,30,.9),0 4px 40px rgba(16,24,30,.6);pointer-events:auto}
+#brand a{color:inherit;text-decoration:none;display:inline-block}
+#brand .yr{display:inline}
+body.docked:not(.brand-ready) #brand{opacity:0}
+body.docked #brand{transform:translate(var(--dock-x,0),var(--dock-y,0)) scale(var(--dock-s,.2))}
+body.docked #brand a{cursor:pointer}
+body.docked #brand a:hover{color:#fff}
+body.at-cover #brand a{cursor:default}
+#cover-body{margin-top:clamp(18px,3vh,32px);max-width:30rem;transition:opacity .5s,transform .5s;pointer-events:auto}
+#cover-body .kicker{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 .6em}
+#cover-body p{font-size:clamp(17px,1.5vw,21px);line-height:1.5;margin:0 0 1.2em;color:var(--ink);text-shadow:0 1px 10px rgba(16,24,30,.9)}
+#cover-body .go{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+#cover-body .go a{color:var(--ink-dim);font-size:15px;margin-left:.4rem}
+#cover-body .go a:hover{color:var(--ink)}
+#cover::before{content:"";position:absolute;inset:-12vh -14vw -10vh -10vw;background:radial-gradient(ellipse at 30% 45%,rgba(16,24,30,.72),rgba(16,24,30,0) 70%);z-index:-1;transition:opacity .8s;pointer-events:none}
+body:not(.at-cover) #cover::before{opacity:0}
+body:not(.at-cover) #cover-body{opacity:0;transform:translateY(12px);pointer-events:none;visibility:hidden;transition:opacity .4s,transform .4s,visibility 0s .4s}
+/* things that only appear once the story has started */
+#counter,#panel,#legend{transition:opacity .7s .35s,transform .7s .35s,border-color .6s,bottom .6s}
+body.at-cover #counter{opacity:0;transform:translateY(-14px)}
+body.at-cover #panel{opacity:0;transform:translateX(28px);pointer-events:none}
+body.at-cover #legend{opacity:0;pointer-events:none}
+body.at-cover #counter,body.at-cover #panel,body.at-cover #legend{transition-delay:0s;transition-duration:.4s}
+body.docked #legend{bottom:calc(var(--bar-h) + 52px)}
 .btn{font-family:var(--serif);font-size:15px;font-weight:600;border-radius:3px;padding:.62em 1.1em;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink)}
 .btn.primary{background:var(--ink);color:var(--sea-deep)}
 .btn:hover{filter:brightness(1.08)}
 .hidden{opacity:0;pointer-events:none}
 
 /* Info panel */
-#panel{position:fixed;right:clamp(12px,1.6vw,24px);top:clamp(12px,2vh,24px);bottom:calc(var(--bar-h) + 14px);width:var(--panel-w);background:var(--panel);border-left:4px solid var(--accent,var(--ink));border-radius:2px;z-index:4;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.35);transition:border-color .6s}
+#panel{position:fixed;right:clamp(12px,1.6vw,24px);top:clamp(12px,2vh,24px);bottom:calc(var(--bar-h) + 14px);width:var(--panel-w);background:var(--panel);border-left:4px solid var(--accent,var(--ink));border-radius:2px;z-index:4;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.35)}
 #panel-scroll{overflow-y:auto;padding:22px 24px 20px;scrollbar-width:thin}
 #p-date{font-size:14.5px;color:var(--ink-dim);margin:0}
 #p-title{font-family:var(--stencil);font-weight:800;font-size:clamp(30px,2.8vw,42px);line-height:.95;margin:.2em 0 .45em}
@@ -81,7 +105,7 @@ body{background:var(--sea-deep);color:var(--ink);font-family:var(--serif);overfl
 @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* Legend */
-#legend{transition:opacity .6s;position:fixed;left:clamp(12px,1.6vw,24px);bottom:calc(var(--bar-h) + 12px);z-index:3;background:rgba(22,32,39,.82);padding:10px 12px;border-radius:2px;font-size:13px;line-height:1.2;display:grid;grid-template-columns:auto auto;gap:6px 14px}
+#legend{position:fixed;left:clamp(12px,1.6vw,24px);bottom:calc(var(--bar-h) + 12px);z-index:3;background:rgba(22,32,39,.82);padding:10px 12px;border-radius:2px;font-size:13px;line-height:1.2;display:grid;grid-template-columns:auto auto;gap:6px 14px}
 #legend .li{display:flex;align-items:center;gap:7px;white-space:nowrap}
 #legend .sw{width:16px;height:11px;border-radius:1px;opacity:.85}
 #legend .ln{width:18px;height:3px;background:#1e1b17;box-shadow:0 0 0 1.5px rgba(236,231,216,.6)}
@@ -122,10 +146,11 @@ body{background:var(--sea-deep);color:var(--ink);font-family:var(--serif);overfl
   #p-body p{font-size:15px}
   #p-toggle{display:block;position:absolute;right:10px;top:10px;background:rgba(236,231,216,.1);border:0;color:var(--ink);font-family:var(--serif);font-size:13px;padding:.35em .7em;border-radius:2px;cursor:pointer}
   #legend{display:none}
-  body.at-intro #panel{display:none}
-  body.at-intro #intro{bottom:calc(var(--bar-h) + 20px)}
-  #intro{bottom:calc(var(--bar-h) + 42vh)}
-  #intro p{font-size:15px}
+  #cover{top:clamp(40px,12vh,110px)}
+  #brand{font-size:clamp(56px,17vw,120px)}
+  #brand .yr{display:block}
+  #cover-body p{font-size:16px}
+  body.at-cover #panel{transform:translateY(28px)}
   .ctl{width:38px;height:38px}.ctl.play{width:44px;height:44px}
   .tick{width:18px;margin-left:-9px}
   .tick i{width:7px;height:7px}
@@ -135,4 +160,5 @@ body{background:var(--sea-deep);color:var(--ink);font-family:var(--serif);overfl
 @media (prefers-reduced-motion:reduce){
   .pulse{animation:none;opacity:0}
   .panel-enter{animation:none}
+  #brand,#cover-body,#counter,#panel,#legend{transition:none}
 }

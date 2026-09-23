@@ -33,13 +33,16 @@ export class Timeline {
     }
   }
 
-  /** Mark moment i as current, with `frac` of the way to the next one filled. */
+  /**
+   * Mark moment i as current, with `frac` of the way to the next one filled.
+   * i = -1 is the front page: nothing current, only "next" enabled.
+   */
   set(i: number, frac = 0): void {
     const n = this.scenes.length;
     this.ticks.forEach((t, j) => { t.classList.toggle('on', j === i); t.classList.toggle('done', j < i); });
-    $('fill').style.width = Math.min(100, (i + frac) / (n - 1) * 100) + '%';
-    $('count').textContent = `${i + 1} of ${n}`;
-    ($('prev') as HTMLButtonElement).disabled = i <= 0;
+    $('fill').style.width = Math.max(0, Math.min(100, (i + frac) / (n - 1) * 100)) + '%';
+    $('count').textContent = i < 0 ? `${n} moments` : `${i + 1} of ${n}`;
+    ($('prev') as HTMLButtonElement).disabled = i < 0;
     ($('next') as HTMLButtonElement).disabled = i >= n - 1;
   }
 }

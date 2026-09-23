@@ -26,25 +26,39 @@ export class View {
 
   constructor(private readonly svg: SVGSVGElement) {}
 
-  /** Measure the window and the panel to find the free area for the map. */
-  layout(): void {
+  /**
+   * Measure the window and the panel to find the free area for the map.
+   * On the cover there is no panel: the globe sits beside (or below) the title.
+   */
+  layout(cover = false): void {
     this.W = innerWidth; this.H = innerHeight; this.mobile = this.W <= MOBILE_MAX;
     this.svg.setAttribute('viewBox', `0 0 ${this.W} ${this.H}`);
     const barH = this.mobile ? 70 : 84;
-    const pr = $('panel').getBoundingClientRect();
+    if (cover) {
+      this.avail = this.mobile
+        ? { x: 0, y: this.H * 0.42, w: this.W, h: Math.max(200, this.H * 0.58 - barH - 8) }
+        : { x: this.W * 0.36, y: 30, w: this.W * 0.64, h: this.H - barH - 50 };
+      return;
+    }
+    // offset* ignore CSS transforms, so this is right even while the panel slides in
+    const panel = $('panel');
     if (this.mobile) {
-      const ph = pr.height || this.H * 0.4;
+      const ph = panel.offsetHeight || this.H * 0.4;
       this.avail = { x: 0, y: 70, w: this.W, h: Math.max(160, this.H - barH - ph - 70 - 16) };
     } else {
-      const right = pr.width ? this.W - pr.left : 440;
+      const right = panel.offsetWidth ? this.W - panel.offsetLeft : 440;
       this.avail = { x: 0, y: 60, w: this.W - right, h: this.H - barH - 60 - 10 };
     }
   }
 
   /** Record which parts of the screen are covered by visible UI. */
   measureBlocked(): void {
-    this.blocked = ['counter', 'legend', 'intro', 'panel'].map(id => $(id))
-      .filter(el => el && !el.classList.contains('hidden') && getComputedStyle(el).display !== 'none')
+    this.blocked = ['counter', 'legend', 'brand', 'cover-body', 'panel'].map(id => $(id))
+      .filter(el => {
+        if (!el || el.classList.contains('hidden')) return false;
+        const cs = getComputedStyle(el);
+        return cs.display !== 'none' && cs.visibility !== 'hidden';
+      })
       .map(el => el.getBoundingClientRect());
   }
 

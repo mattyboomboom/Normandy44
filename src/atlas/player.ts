@@ -61,6 +61,7 @@ export class Player {
     $('play-ico').innerHTML = on ? PAUSE_ICON : PLAY_ICON;
     if (!on) { this.stopTimer(); return; }
     const { host } = this;
+    // from the last moment, start again; from the cover (-1), start at the first
     if (host.index() >= host.count() - 1) host.goTo(0);
     else host.goTo(host.index() + 1);
   }

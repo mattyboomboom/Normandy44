@@ -9,15 +9,23 @@ import { withBase } from '../lib/url';
 import { figureHref, momentPath } from '../lib/site';
 import { accentFor, bodyHtml, dayLabel, forcesHeading, forcesHtml, fullDate } from '../atlas/panel';
 
-interface Props { scenes: Scene[]; index: number }
+interface Props {
+  scenes: Scene[];
+  /** Moment this page opens on; -1 for the front page (cover) */
+  index: number;
+}
 const { scenes, index } = Astro.props;
-const scene = scenes[index];
+const cover = index < 0;
+// On the cover the panel is hidden, but it is still filled with the first
+// moment so the transition into it has nothing to load.
+const scene = scenes[cover ? 0 : index];
 
 // What the browser needs: everything except the editorial notes on figures.
 const data = {
   start: index,
   geo: withBase('data/geo.topo.json'),
-  paths: scenes.map((s, i) => momentPath(s.id, i)),
+  cover: withBase('/'),
+  paths: scenes.map(s => momentPath(s.id)),
   sourcesPath: withBase('sources/'),
   scenes: scenes.map(s => ({ ...s, forces: s.forces?.map(({ note, ...f }) => f) }))
 };
@@ -58,12 +66,16 @@ const data = {
 
 <div id="counter" aria-live="polite"><div id="dnum">{dayLabel(scene.day)}</div><div id="ddate">{fullDate(scene)}</div><div id="ashore"></div></div>
 
-<div id="intro" class:list={[{ hidden: index !== 0 }]}>
-  <h1>Normandy, 1944</h1>
-  <p>Eighty-five days from the beaches to the Seine: how the Allies landed, held on, broke out and trapped two German armies.</p>
-  <div class="go">
-    <button class="btn primary" id="btn-begin">Play the campaign</button>
-    <button class="btn" id="btn-step">Step through</button>
+<div id="cover">
+  <h1 id="brand"><a href={withBase('/')} tabindex={cover ? -1 : 0}>Normandy,<span class="yr"> 1944</span></a></h1>
+  <div id="cover-body">
+    <p class="kicker">6 June – 30 August 1944</p>
+    <p>Eighty-five days from the beaches to the Seine: how the Allies landed, held on, broke out and trapped two German armies.</p>
+    <div class="go">
+      <button class="btn primary" id="btn-begin">Play the campaign</button>
+      <button class="btn" id="btn-step">Step through</button>
+      <a href={withBase('story/')}>or read the story</a>
+    </div>
   </div>
 </div>
 
@@ -78,7 +90,7 @@ const data = {
   </div>
 </aside>
 
-<div id="legend" aria-label="Map key" class:list={[{ hidden: index === 0 }]}>
+<div id="legend" aria-label="Map key">
   <div class="li"><span class="sw" style="background:var(--us)"></span>US control</div>
   <div class="li"><span class="ln"></span>Front line</div>
   <div class="li"><span class="sw" style="background:var(--uk)"></span>British control</div>

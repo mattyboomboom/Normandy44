@@ -52,7 +52,7 @@ function wrap(text: string, max: number): string[] {
   return lines;
 }
 
-function render(sc: Scene): string {
+function render(sc: Scene, cover = false): string {
   const cam = frameCamera(sc.cam, AVAIL, false);
   const proj = geoOrthographic().clipAngle(90).precision(0.25)
     .rotate([-cam.lon, -cam.lat]).scale(cam.scale).translate([AVAIL.x + AVAIL.w / 2, AVAIL.y + AVAIL.h / 2]);
@@ -130,22 +130,27 @@ ${beaches}
 ${arrows}
 ${events}
 <rect width="${W}" height="${H}" fill="url(#shade)"/>
+${cover ? `
+<text font-family="Big Shoulders Stencil Display" font-weight="800" font-size="150" fill="#ece7d8"><tspan x="52" y="220">Normandy,</tspan><tspan x="52" y="350">1944</tspan></text>
+<text x="56" y="420" font-family="Source Serif 4" font-size="28" fill="#aeb4ab">6 June – 30 August 1944</text>
+<text font-family="Source Serif 4" font-size="30" fill="#ece7d8"><tspan x="56" y="490">An animated atlas of the</tspan><tspan x="56" y="530">Battle of Normandy</tspan></text>` : `
 <text x="52" y="236" font-family="Big Shoulders Stencil Display" font-weight="800" font-size="196" fill="#ece7d8">${esc(dayLabel(sc.day))}</text>
 <text font-family="Source Serif 4" font-weight="600" font-size="48" fill="#ece7d8">${title}</text>
 <text x="56" y="${dateY}" font-family="Source Serif 4" font-size="27" fill="#aeb4ab">${esc(fullDate(sc))}</text>
-<text x="56" y="${H - 44}" font-family="Source Serif 4" font-style="italic" font-size="23" fill="#aeb4ab">Normandy 1944 · an animated atlas</text>
+<text x="56" y="${H - 44}" font-family="Source Serif 4" font-style="italic" font-size="23" fill="#aeb4ab">Normandy 1944 · an animated atlas</text>`}
 </svg>`;
 }
 
 const fontFiles = fs.readdirSync(path.join(ROOT, 'scripts/og-fonts')).map(f => path.join(ROOT, 'scripts/og-fonts', f));
 fs.mkdirSync(OUT, { recursive: true });
 const t0 = Date.now();
-for (const [i, sc] of scenes.entries()) {
-  const png = new Resvg(render(sc), {
-    font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'Source Serif 4' },
-    fitTo: { mode: 'width', value: W }
-  }).render().asPng();
-  fs.writeFileSync(path.join(OUT, `${sc.id}.png`), png);
-  if (i === 0) fs.writeFileSync(path.join(OUT, 'default.png'), png);
-}
-console.log(`og: ${scenes.length} preview images in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+const png = (svg: string) => new Resvg(svg, {
+  font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'Source Serif 4' },
+  fitTo: { mode: 'width', value: W }
+}).render().asPng();
+for (const sc of scenes) fs.writeFileSync(path.join(OUT, `${sc.id}.png`), png(render(sc)));
+// Front page (and the default for other pages): the first moment's globe with the title
+const coverPng = png(render({ ...scenes[0], cam: { globe: true, center: [-9, 46] }, events: [] }, true));
+fs.writeFileSync(path.join(OUT, 'cover.png'), coverPng);
+fs.writeFileSync(path.join(OUT, 'default.png'), coverPng);
+console.log(`og: ${scenes.length + 1} preview images in ${((Date.now() - t0) / 1000).toFixed(1)}s`);

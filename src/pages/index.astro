@@ -1,14 +1,13 @@
 ---
-// Home page: the atlas, opening on the first moment (the eve of D-Day).
+// Front page: the title over the globe. Starting the story moves to /eve/.
 import Base from '../layouts/Base.astro';
 import Atlas from '../components/Atlas.astro';
 import { loadContent } from '../lib/load';
-import { momentDescription, momentTitle } from '../lib/meta';
+import { coverDescription, coverTitle } from '../lib/meta';
 
 const { scenes } = await loadContent();
-const sc = scenes[0];
 ---
-<Base title={momentTitle(sc, 0)} description={momentDescription(sc, 0)} path="" image={`og/${sc.id}.png`}
-  imageAlt={`Map: ${sc.title}`} bodyClass="atlas at-intro" preloadMap>
-  <Atlas scenes={scenes} index={0} />
+<Base title={coverTitle()} description={coverDescription()} path="" image="og/cover.png"
+  imageAlt="Normandy, 1944: an animated atlas of the Battle of Normandy" bodyClass="atlas at-cover" preloadMap>
+  <Atlas scenes={scenes} index={-1} />
 </Base>
