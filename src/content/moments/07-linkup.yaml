@@ -1,0 +1,49 @@
+# The beachheads join (12–13 June)
+order: 7
+day: 6
+date: 12–13 June
+title: The beachheads join
+cam: [ [ -1.6, 49.02 ], [ -0.05, 49.56 ] ]
+state: s2
+beaches: true
+body:
+  - The 101st Airborne takes Carentan on 12 June, joining Utah and Omaha into one continuous front.
+  - Next day a British armoured hook around Tilly is stopped dead at Villers-Bocage by Tiger tanks. German armour, including 12th SS and Panzer Lehr, is now massed in front of Caen.
+forces:
+  - n: all
+    k: Landed by 11 June
+    v: 326,547
+    s: With 54,186 vehicles
+    src:
+      - ddaystory
+    check: verified
+    note: By the end of 11 June (D+5), with 104,428 tons of supplies.
+  - n: us
+    k: US First Army (Bradley)
+    s: V and VII Corps
+  - n: uk
+    k: British Second Army (Dempsey)
+    s: I and XXX Corps, including 3rd Canadian Division
+  - n: de
+    k: German armour at Caen
+    s: 21st Panzer, 12th SS Hitlerjugend, Panzer Lehr
+events:
+  - n: Carentan
+    p: [ -1.247, 49.303 ]
+    k: star
+    nat: us
+    note: Taken 12 June, linking Utah and Omaha
+  - n: Villers-Bocage
+    p: [ -0.656, 49.08 ]
+    k: clash
+    nat: de
+    note: "13 June: British 7th Armoured halted by Tigers"
+  - n: Caumont
+    p: [ -0.8, 49.09 ]
+    k: point
+    nat: us
+    note: Reached by US 1st Division, 13 June
+arrows:
+  - n: uk
+    pts: [ [ -0.78, 49.2 ], [ -0.74, 49.12 ], [ -0.67, 49.085 ] ]
+    w: 2.4

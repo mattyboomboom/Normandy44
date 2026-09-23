@@ -1,0 +1,51 @@
+---
+// The whole campaign as plain text: every moment's story and figures, in
+// order. For reading without the map, for screen readers and for search engines.
+import Page from '../layouts/Page.astro';
+import { loadContent } from '../lib/load';
+import { figureHref, momentPath } from '../lib/site';
+import { dayLabel, fullDate, forcesHeading } from '../atlas/panel';
+import { NAT, NAT_NAME } from '../data/nations';
+
+const { scenes } = await loadContent();
+---
+<Page title="The story in 18 moments" path="story/"
+  description="The Battle of Normandy, 5 June to 30 August 1944, told in 18 moments: the landings, the fight for the beachhead, the breakout, the Falaise pocket and the liberation of Paris.">
+  <div class="prose">
+    <h1>The story in 18 moments</h1>
+    <p class="lede">The Battle of Normandy as text, from the eve of D-Day to the crossing of the Seine. Each moment links to its view on the map.</p>
+    <nav aria-label="Moments" class="small">
+      <ol>
+        {scenes.map(sc => <li><a href={`#${sc.id}`}>{sc.title}</a> <span class="dim">({dayLabel(sc.day)})</span></li>)}
+      </ol>
+    </nav>
+
+    {scenes.map((sc, i) => (
+      <article class="moment" id={sc.id} aria-labelledby={`h-${sc.id}`}>
+        <p class="when"><b>{dayLabel(sc.day)}</b>{fullDate(sc)}</p>
+        <h2 id={`h-${sc.id}`}>{sc.title}</h2>
+        {sc.body.map(p => <p>{p}</p>)}
+        {sc.forces && sc.forces.length > 0 && (
+          <table class="figs">
+            <caption>{forcesHeading(sc)}</caption>
+            <tbody>
+              {sc.forces.map((f, j) => (
+                <tr>
+                  <th scope="row">
+                    <span class="sw" style={`background:${NAT[f.n]}`} title={NAT_NAME[f.n]}></span>{f.k}
+                    {f.s && <span class="s">{f.s}</span>}
+                  </th>
+                  <td class="v">
+                    {f.v}
+                    {f.check && <a class:list={['cite', { unv: f.check === 'unverified' }]} href={figureHref(sc.id, j)}>{f.check === 'verified' ? 'source' : 'unverified'}</a>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <p class="onmap"><a href={momentPath(sc.id, i)}>See this moment on the map</a></p>
+      </article>
+    ))}
+  </div>
+</Page>

@@ -1,0 +1,81 @@
+# Normandy won (30 August)
+order: 18
+day: 85
+date: 30 August
+title: Normandy won
+cam: [ [ -5, 46.9 ], [ 4.3, 50.2 ] ]
+state: s12
+beaches: true
+body:
+  - By 30 August the last German units west of the Seine have crossed it or surrendered, and the Battle of Normandy is over. It took 85 days rather than the 90 planners had allowed to reach the Seine, and two German armies were wrecked.
+  - Within a week Allied spearheads are in Belgium.
+forces:
+  - n: us
+    k: US casualties
+    v: 124,394
+    s: 20,668 killed
+    src:
+      - wp-overlord
+    check: verified
+  - n: uk
+    k: British casualties
+    v: ≈65,000
+    s: ≈11,000 killed
+    src:
+      - wp-overlord
+    check: verified
+    note: "Worked out from Wikipedia: 83,045 British and Canadian casualties (15,995 killed), less the Canadian 18,444 (5,021 killed)."
+  - n: ca
+    k: Canadian casualties
+    v: 18,444
+    s: 5,021 killed
+    src:
+      - wp-overlord
+    check: verified
+  - n: pl
+    k: Polish casualties
+    v: 2,097
+    s: 1st Armoured Division, 7–22 August
+    src:
+      - wp-polish-1ad
+    check: verified
+    note: 446 killed, 1,501 wounded, 150 missing.
+  - n: de
+    k: German losses
+    v: ≈400,000
+    s: Including ≈200,000 taken prisoner
+    src:
+      - crs2019
+    check: verified
+    note: "CRS: over 240,000 casualties and 200,000 captured."
+  - n: fr
+    k: French civilians killed
+    v: 13,000–20,000
+    src:
+      - crs2019
+      - ddaystory
+    check: verified
+    note: Corrected from 15,000–20,000 to the CRS range. The D-Day Story says around 20,000.
+events:
+  - n: Brest
+    p: [ -4.49, 48.39 ]
+    k: fort
+    nat: de
+  - n: Lorient
+    p: [ -3.37, 47.75 ]
+    k: fort
+    nat: de
+  - n: Saint-Nazaire
+    p: [ -2.21, 47.28 ]
+    k: fort
+    nat: de
+  - n: Le Havre
+    p: [ 0.11, 49.49 ]
+    k: fort
+    nat: de
+    note: Held until 12 September
+  - n: Channel Islands
+    p: [ -2.35, 49.33 ]
+    k: fort
+    nat: de
+    note: Occupied until May 1945

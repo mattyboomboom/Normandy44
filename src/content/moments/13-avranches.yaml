@@ -1,0 +1,46 @@
+# Breakout at Avranches (30 July – 1 August)
+order: 13
+day: 55
+date: 30 July – 1 August
+title: Breakout at Avranches
+cam: [ [ -1.95, 48.45 ], [ -0.15, 49.42 ] ]
+state: s8
+beaches: false
+body:
+  - US 4th Armored Division reaches Avranches on 30 July and seizes the bridge at Pontaubault intact. On 1 August Patton’s Third Army comes into being and pushes seven divisions through the single-road bottleneck in 72 hours.
+  - Bradley steps up to command 12th Army Group. The British open Operation Bluecoat, south from Caumont towards Mont Pinçon and Vire.
+forces:
+  - n: us
+    k: 12th Army Group (Bradley)
+    s: First Army (Hodges), Third Army (Patton)
+  - n: uk
+    k: 21st Army Group (Montgomery)
+    s: British Second Army (Dempsey), First Canadian Army (Crerar)
+  - n: us
+    k: Divisions through Avranches in 72 hours
+    v: "7"
+    src:
+      - wp-cobra
+    check: verified
+    note: Between 1 and 4 August.
+events:
+  - n: Avranches
+    p: [ -1.357, 48.685 ]
+    k: star
+    nat: us
+    note: Reached 30 July
+  - n: Pontaubault bridge
+    p: [ -1.35, 48.63 ]
+    k: point
+    nat: us
+    note: Captured intact, 31 July
+arrows:
+  - n: us
+    pts: [ [ -1.45, 49.05 ], [ -1.5, 48.88 ], [ -1.4, 48.7 ] ]
+    w: 3.2
+  - n: us
+    pts: [ [ -1.3, 48.98 ], [ -1.25, 48.82 ], [ -1.2, 48.72 ] ]
+    w: 2.4
+  - n: uk
+    pts: [ [ -0.8, 49.1 ], [ -0.83, 49.03 ], [ -0.84, 48.96 ] ]
+    w: 2.4

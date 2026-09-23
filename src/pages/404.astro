@@ -1,0 +1,11 @@
+---
+import Page from '../layouts/Page.astro';
+import { withBase } from '../lib/url';
+---
+<Page title="Page not found" path="404/" description="This page does not exist.">
+  <div class="prose">
+    <h1>Not found</h1>
+    <p class="lede">There is no page at this address.</p>
+    <p><a href={withBase('/')}>Go to the map</a>, or <a href={withBase('story/')}>read the story</a>.</p>
+  </div>
+</Page>

@@ -1,0 +1,48 @@
+---
+// About: what the atlas is, how to use it, how it was made, and its limits.
+import Page from '../layouts/Page.astro';
+import { withBase } from '../lib/url';
+---
+<Page title="About this atlas" path="about/"
+  description="How the Normandy 1944 atlas works, how the map and the areas of control were drawn, where the figures come from, and what to bear in mind.">
+  <div class="prose">
+    <h1>About this atlas</h1>
+    <p class="lede">An animated map of the Battle of Normandy, from the eve of D-Day on 5 June 1944 to the crossing of the Seine at the end of August: eighty-five days in eighteen moments.</p>
+
+    <h2>Using it</h2>
+    <ul>
+      <li><strong>Play</strong> runs through the campaign, pausing on each moment long enough to read it. Press again to pause.</li>
+      <li>The <strong>arrows</strong> on screen, or the ← and → keys, step one moment at a time. Space plays and pauses; Home and End jump to the start and finish.</li>
+      <li>Click any point on the <strong>timeline</strong> to jump there.</li>
+      <li><strong>Drag</strong> to pan, and scroll or pinch to zoom. The next moment resets the view.</li>
+      <li>Click a <strong>marker</strong> on the map for a short note about it.</li>
+      <li>Every moment has its own address, such as <a href={withBase('cobra/')}>/cobra/</a>, so you can link straight to it. The browser's Back button steps back through the moments you visited.</li>
+      <li>Prefer to read? <a href={withBase('story/')}>The whole story</a> is also on a single page, without the map.</li>
+    </ul>
+
+    <h2>How the map is drawn</h2>
+    <p>The land, rivers and borders come from Natural Earth; the French coastline is the more detailed outline from IGN and INSEE open data. A few small Normandy rivers that matter to the story, such as the Orne and the Dives, were traced by hand.</p>
+    <p>The coloured areas show Allied control. There are five of them, one for each landing force, and they grow into the armies those forces became:</p>
+    <ul>
+      <li>Utah: US VII Corps, later the US Third Army's drive into Brittany and the long hook east</li>
+      <li>Omaha: US V Corps, then the US First Army</li>
+      <li>Gold: British XXX Corps, then the British Second Army</li>
+      <li>Juno: 3rd Canadian Division, then the First Canadian Army</li>
+      <li>Sword: British I Corps and the 6th Airborne Division east of the Orne</li>
+    </ul>
+    <p>Each area is redrawn at twelve points in the campaign and morphs smoothly between them. The dark line around them is the front. Both are simplified from period situation maps: they show the shape of the campaign, not the exact line on a given day, and they leave out pockets, salients and the no-man's-land between the armies. Arrows show the direction of the main moves, not particular routes.</p>
+
+    <h2>Where the figures come from</h2>
+    <p>The panel for each moment gives troop numbers, casualties and other figures. Each one links to the <a href={withBase('sources/')}>Sources</a> page, which says where it comes from and whether it has been checked. A few are marked <em>unverified</em>: they are plausible and widely repeated, but have not yet been traced to a source. Sources often differ, especially on German strength and losses; where they do, the range or the difference is noted.</p>
+    <p>The running total of Allied troops ashore under the date is interpolated between five sourced figures (D-Day, 11 June, 30 June, 25 July and 21 August), so on the days between them it is an estimate.</p>
+
+    <h2>Accessibility</h2>
+    <p>If your device is set to reduce motion, the map moves straight to each moment without animation. Everything can be operated from the keyboard, and the <a href={withBase('story/')}>story page</a> carries all the text and figures in a simple, readable form.</p>
+
+    <h2>Corrections</h2>
+    <p>Spotted a mistake, or can trace one of the unverified figures? Please <a href="https://github.com/mattyboomboom/Normandy44/issues">open an issue on GitHub</a>.</p>
+
+    <h2>Credits</h2>
+    <p class="small">Map data: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain) and <a href="https://github.com/gregoiredavid/france-geojson">france-geojson</a> (from IGN and INSEE open data). Rendering: <a href="https://d3js.org/">d3</a>. Built with <a href="https://astro.build/">Astro</a>. Type: Big Shoulders Stencil Display and Source Serif 4, both under the SIL Open Font License.</p>
+  </div>
+</Page>

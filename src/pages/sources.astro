@@ -1,0 +1,96 @@
+---
+// Sources: every figure on the site with its source, check status and notes,
+// then the bibliography. Figure anchors (#fig-<moment>-<n>) are linked from
+// the map panel and the story page.
+import Page from '../layouts/Page.astro';
+import type { Source } from '../data/types';
+import { loadContent } from '../lib/load';
+import { citedSources } from '../lib/content';
+import { figureAnchor, momentPath } from '../lib/site';
+import { dayLabel } from '../atlas/panel';
+
+const { scenes, sources } = await loadContent();
+const byId = new Map(sources.map(s => [s.id, s]));
+const cited = citedSources(scenes, sources);
+const citedIds = new Set(cited.map(s => s.id));
+const uncitedOfficial = sources.filter(s => s.kind === 'official' && !citedIds.has(s.id));
+const mapData = sources.filter(s => s.kind === 'data');
+
+const figures = scenes.flatMap((sc, i) => (sc.forces || []).map((f, j) => ({ sc, i, f, j })).filter(x => x.f.check));
+const verified = figures.filter(x => x.f.check === 'verified').length;
+const unverified = figures.filter(x => x.f.check === 'unverified');
+
+const shortName = (s: Source) => s.kind === 'web' && s.author === 'Wikipedia' ? `Wikipedia, “${s.title}”` : `${s.author}${s.year ? ` (${s.year})` : ''}`;
+const fmtDate = (d?: Date) => d ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+---
+<Page title="Sources" path="sources/"
+  description="Where every figure in the Normandy 1944 atlas comes from: sources, notes and the check status of each number, plus a bibliography.">
+  <div class="prose">
+    <h1>Sources</h1>
+    <p class="lede">Every number on the map has been checked against a source, or is marked as still to be checked. This page lists each figure, where it comes from, and anything you should know about it.</p>
+    <p>Of the {figures.length} figures in the atlas, <strong>{verified}</strong> have been checked against the sources listed and <strong>{unverified.length}</strong> are still to be traced. Checks were made in September 2026. Where a book is cited through a web page (usually a Wikipedia article that quotes it), that page is named as well, so you can see how far the check went. Some figures were corrected during the check; their notes say what changed.</p>
+    <p>Troop, casualty and supply figures are rounded, widely cited totals. Sources often disagree, particularly on German losses, and some numbers are best treated as orders of magnitude.</p>
+
+    {unverified.length > 0 && (
+      <>
+        <h2>Still to check</h2>
+        <ul>
+          {unverified.map(({ sc, f, j }) => <li><a href={`#${figureAnchor(sc.id, j)}`}>{f.k}</a> <span class="dim">({sc.title})</span></li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Figures, moment by moment</h2>
+    {scenes.map((sc, i) => {
+      const rows = (sc.forces || []).map((f, j) => ({ f, j })).filter(x => x.f.check);
+      return rows.length > 0 && (
+        <section aria-labelledby={`src-h-${sc.id}`}>
+          <h3 id={`src-h-${sc.id}`}><a href={momentPath(sc.id, i)}>{sc.title}</a> <span class="dim small">{dayLabel(sc.day)}, {sc.date}</span></h3>
+          {rows.map(({ f, j }) => (
+            <div class="fig" id={figureAnchor(sc.id, j)}>
+              <span class="k">{f.k}</span><span class="v">{f.v}</span>
+              {f.check === 'verified' ? <span class="badge ok">Checked</span> : <span class="badge unv">Unverified</span>}
+              {f.s && <div class="dim small">{f.s}</div>}
+              {f.src && f.src.length > 0 && (
+                <p class="by">Source: {f.src.map((k, n) => {
+                  const s = byId.get(k)!;
+                  return <>{n > 0 && '; '}<a href={`#src-${k}`}>{shortName(s)}</a>{s.pages && `, p. ${s.pages}`}{s.via && byId.get(s.via) && <span class="dim"> (via {shortName(byId.get(s.via)!)})</span>}</>;
+                })}</p>
+              )}
+              {f.note && <p class="note">{f.note}</p>}
+            </div>
+          ))}
+        </section>
+      );
+    })}
+
+    <h2>Bibliography</h2>
+    <h3>Cited</h3>
+    <ol class="bib">
+      {cited.map(s => (
+        <li id={`src-${s.id}`}>
+          {s.author}{s.year && ` (${s.year})`}. {s.url ? <a href={s.url}><cite>{s.title}</cite></a> : <cite>{s.title}</cite>}.
+          {s.publisher && ` ${s.publisher}.`}{s.pages && ` Pages cited: ${s.pages}.`}
+          {s.accessed && <span class="dim"> Checked {fmtDate(s.accessed)}.</span>}
+          {s.via && byId.get(s.via) && <span class="dim"> Checked via <a href={`#src-${s.via}`}>{shortName(byId.get(s.via)!)}</a>.</span>}
+          {s.note && <div class="dim small">{s.note}</div>}
+        </li>
+      ))}
+    </ol>
+
+    <h3>Official histories</h3>
+    <p class="small dim">The standard accounts, and the places to trace the figures still marked unverified.</p>
+    <ul class="bib">
+      {uncitedOfficial.map(s => (
+        <li id={`src-${s.id}`}>{s.author} ({s.year}). {s.url ? <a href={s.url}><cite>{s.title}</cite></a> : <cite>{s.title}</cite>}. {s.publisher}.</li>
+      ))}
+    </ul>
+
+    <h3>Map data</h3>
+    <ul class="bib">
+      {mapData.map(s => (
+        <li id={`src-${s.id}`}>{s.url ? <a href={s.url}>{s.author}, {s.title}</a> : `${s.author}, ${s.title}`}. {s.note}</li>
+      ))}
+    </ul>
+  </div>
+</Page>

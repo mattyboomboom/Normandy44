@@ -1,0 +1,103 @@
+---
+// The interactive atlas: map, day counter, info panel, legend and timeline.
+// Each moment's page renders this with that moment's text already in place,
+// so it can be read (and indexed) before the map script has loaded.
+// src/atlas/main.ts then takes over, using the JSON embedded below.
+import '../styles/atlas.css';
+import type { Scene } from '../data/types';
+import { withBase } from '../lib/url';
+import { figureHref, momentPath } from '../lib/site';
+import { accentFor, bodyHtml, dayLabel, forcesHeading, forcesHtml, fullDate } from '../atlas/panel';
+
+interface Props { scenes: Scene[]; index: number }
+const { scenes, index } = Astro.props;
+const scene = scenes[index];
+
+// What the browser needs: everything except the editorial notes on figures.
+const data = {
+  start: index,
+  geo: withBase('data/geo.topo.json'),
+  paths: scenes.map((s, i) => momentPath(s.id, i)),
+  sourcesPath: withBase('sources/'),
+  scenes: scenes.map(s => ({ ...s, forces: s.forces?.map(({ note, ...f }) => f) }))
+};
+---
+<svg id="map" role="img" aria-label="Animated map of the Normandy campaign">
+  <defs>
+    <filter id="frontline" x="-5%" y="-5%" width="110%" height="110%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="1.8" result="d"/>
+      <feComposite in="d" in2="SourceAlpha" operator="out" result="o"/>
+      <feFlood flood-color="#1c1a15" result="c"/>
+      <feComposite in="c" in2="o" operator="in"/>
+    </filter>
+    <clipPath id="clip-fr"><use href="#land-fr"/></clipPath>
+    <clipPath id="clip-world" clip-rule="evenodd"><path id="world-hole" clip-rule="evenodd"/></clipPath>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#8a2a1f" stroke-width="2"/>
+    </pattern>
+    <g id="markers"></g>
+  </defs>
+  <path class="sea" id="sphere"/>
+  <path class="grat" id="grat"/>
+  <g clip-path="url(#clip-world)"><path class="world" id="world"/></g>
+  <path class="borders" id="borders"/>
+  <path class="land-other" id="land-other"/>
+  <path class="land-fr" id="land-fr"/>
+  <g id="rivers"></g>
+  <g clip-path="url(#clip-fr)">
+    <g id="rings" opacity=".62"></g>
+    <g id="front" filter="url(#frontline)"></g>
+  </g>
+  <g id="bombs"></g>
+  <g id="beaches"></g>
+  <g id="places"></g>
+  <g id="arrows"></g>
+  <g id="events"></g>
+  <g id="sealabels"></g>
+</svg>
+
+<div id="counter" aria-live="polite"><div id="dnum">{dayLabel(scene.day)}</div><div id="ddate">{fullDate(scene)}</div><div id="ashore"></div></div>
+
+<div id="intro" class:list={[{ hidden: index !== 0 }]}>
+  <h1>Normandy, 1944</h1>
+  <p>Eighty-five days from the beaches to the Seine: how the Allies landed, held on, broke out and trapped two German armies.</p>
+  <div class="go">
+    <button class="btn primary" id="btn-begin">Play the campaign</button>
+    <button class="btn" id="btn-step">Step through</button>
+  </div>
+</div>
+
+<aside id="panel" aria-live="polite" style={`--accent:${accentFor(scene)}`}>
+  <button id="p-toggle" aria-expanded="false">More</button>
+  <div id="panel-scroll">
+    <p id="p-date">{fullDate(scene)}</p>
+    <h2 id="p-title">{scene.title}</h2>
+    <div id="p-body" set:html={bodyHtml(scene)}></div>
+    <section id="forces"><h3 id="f-head">{forcesHeading(scene)}</h3><div id="f-rows" set:html={forcesHtml(scene, figureHref)}></div></section>
+    <nav class="p-links" aria-label="More about this atlas"><a href={withBase('story/')}>Read the whole story</a><a href={withBase('about/')}>About this atlas</a><a href={withBase('sources/')}>Sources</a></nav>
+  </div>
+</aside>
+
+<div id="legend" aria-label="Map key" class:list={[{ hidden: index === 0 }]}>
+  <div class="li"><span class="sw" style="background:var(--us)"></span>US control</div>
+  <div class="li"><span class="ln"></span>Front line</div>
+  <div class="li"><span class="sw" style="background:var(--uk)"></span>British control</div>
+  <div class="li"><svg width="18" height="12"><path d="M1 6H12" stroke="#ece7d8" stroke-width="5" stroke-linecap="round" opacity=".55"/><path d="M1 6H12" stroke="#26241f" stroke-width="2.5" stroke-linecap="round"/><path d="M10.5 1.5L17 6L10.5 10.5Z" fill="#26241f" stroke="#ece7d8" stroke-width=".8" stroke-opacity=".6"/></svg>German move</div>
+  <div class="li"><span class="sw" style="background:var(--ca)"></span>Canadian control</div>
+  <div class="li"><svg width="14" height="14"><rect x="2" y="2" width="10" height="10" fill="#26241f" stroke="#ece7d8" stroke-width="1.5"/></svg>German fortress</div>
+</div>
+
+<div id="pop" role="tooltip" hidden><b id="pop-t"></b><span id="pop-n"></span></div>
+<nav id="bar" aria-label="Campaign timeline">
+  <button class="ctl" id="prev" aria-label="Previous moment"><svg viewBox="0 0 20 20"><path d="M13 3L6 10L13 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="ctl play" id="play" aria-label="Play"><svg viewBox="0 0 20 20" id="play-ico"><path d="M6 3.5L16 10L6 16.5Z" fill="currentColor"/></svg></button>
+  <button class="ctl" id="next" aria-label="Next moment"><svg viewBox="0 0 20 20"><path d="M7 3L14 10L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div id="track"><div id="rail"></div><div id="fill"></div></div>
+  <div id="count"></div>
+</nav>
+
+<script type="application/json" id="atlas-data" set:html={JSON.stringify(data).replace(/</g, '\\u003c')}></script>
+<script>
+  import { start } from '../atlas/main';
+  start();
+</script>

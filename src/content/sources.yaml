@@ -1,0 +1,220 @@
+# Bibliography. Every figure in a moment (src/content/moments) lists the keys
+# of the sources that support it; the build fails if a key is missing here.
+#
+# kind:
+#   web        a web page we checked the figure against
+#   book       a published work
+#   official   an official history
+#   data       map data
+# via: when a figure was checked against a secondary page that quotes the
+#   work (usually a Wikipedia article's citation), the page is named here, so
+#   readers can see exactly how far the check went.
+
+- id: ddaystory
+  kind: web
+  author: The D-Day Story, Portsmouth
+  title: What is D-Day?
+  url: https://theddaystory.com/discover/what-is-d-day/
+  accessed: 2026-09-23
+  note: Portsmouth's D-Day museum. Troops landed by beach and nation, ships, aircraft, D-Day deaths, build-up to D+5.
+
+- id: crs2019
+  kind: official
+  author: Congressional Research Service
+  title: "Defense Primer: 75th Anniversary of D-Day, June 6, 1944 (IF11228)"
+  publisher: Library of Congress
+  year: 2019
+  url: https://www.congress.gov/crs-product/IF11228
+  accessed: 2026-09-23
+  note: D-Day casualties by nation; campaign losses including German prisoners and French civilian deaths.
+
+- id: citino-reception
+  kind: web
+  author: Robert Citino
+  title: "The Reception: The Germans on D-Day"
+  publisher: The National WWII Museum
+  url: https://www.nationalww2museum.org/war/articles/reception-germans-d-day
+  accessed: 2026-09-23
+  note: German strength in the West on the eve of D-Day.
+
+- id: weinberg1994
+  kind: book
+  author: Gerhard L. Weinberg
+  title: "A World at Arms: A Global History of World War II"
+  publisher: Cambridge University Press
+  year: 1994
+  pages: "684"
+  via: wp-overlord
+  note: Divisions committed to the Battle of Normandy.
+
+- id: tamelander2003
+  kind: book
+  author: Michael Tamelander and Niklas Zetterling
+  title: "Avgörandets ögonblick: Invasionen i Normandie"
+  publisher: Norstedts
+  year: 2003
+  pages: "341"
+  via: wp-overlord
+  note: Men landed in northern France by 21 August.
+
+- id: whitmarsh2009
+  kind: book
+  author: Andrew Whitmarsh
+  title: D-Day in Photographs
+  publisher: The History Press
+  year: 2009
+  pages: "31, 51"
+  via: wp-landings
+  note: Bombers before the landings; Utah casualties.
+
+- id: jackson2006
+  kind: book
+  author: G. S. Jackson
+  title: "Operations of Eighth Corps: Account of Operations from Normandy to the River Rhine"
+  publisher: Tom Donovan
+  year: 2006
+  pages: "12, 22, 27"
+  via: wp-epsom
+  note: Strength of VIII Corps for Operation Epsom.
+
+- id: wp-landings
+  kind: web
+  author: Wikipedia
+  title: Normandy landings
+  url: https://en.wikipedia.org/wiki/Normandy_landings
+  accessed: 2026-09-23
+
+- id: wp-overlord
+  kind: web
+  author: Wikipedia
+  title: Operation Overlord
+  url: https://en.wikipedia.org/wiki/Operation_Overlord
+  accessed: 2026-09-23
+  note: Campaign strengths and casualties by nation (infobox and text).
+
+- id: wp-omaha
+  kind: web
+  author: Wikipedia
+  title: Omaha Beach
+  url: https://en.wikipedia.org/wiki/Omaha_Beach
+  accessed: 2026-09-23
+
+- id: wp-pointe-du-hoc
+  kind: web
+  author: Wikipedia
+  title: Pointe du Hoc
+  url: https://en.wikipedia.org/wiki/Pointe_du_Hoc
+  accessed: 2026-09-23
+
+- id: wp-cherbourg
+  kind: web
+  author: Wikipedia
+  title: Battle of Cherbourg
+  url: https://en.wikipedia.org/wiki/Battle_of_Cherbourg
+  accessed: 2026-09-23
+
+- id: wp-epsom
+  kind: web
+  author: Wikipedia
+  title: Operation Epsom
+  url: https://en.wikipedia.org/wiki/Operation_Epsom
+  accessed: 2026-09-23
+
+- id: wp-cobra
+  kind: web
+  author: Wikipedia
+  title: Operation Cobra
+  url: https://en.wikipedia.org/wiki/Operation_Cobra
+  accessed: 2026-09-23
+
+- id: wp-luttich
+  kind: web
+  author: Wikipedia
+  title: Operation Lüttich
+  url: https://en.wikipedia.org/wiki/Operation_L%C3%BCttich
+  accessed: 2026-09-23
+
+- id: wp-falaise
+  kind: web
+  author: Wikipedia
+  title: Falaise pocket
+  url: https://en.wikipedia.org/wiki/Falaise_pocket
+  accessed: 2026-09-23
+
+- id: wp-polish-1ad
+  kind: web
+  author: Wikipedia
+  title: 1st Armoured Division (Poland)
+  url: https://en.wikipedia.org/wiki/1st_Armoured_Division_(Poland)
+  accessed: 2026-09-23
+
+- id: wp-us-airborne
+  kind: web
+  author: Wikipedia
+  title: American airborne landings in Normandy
+  url: https://en.wikipedia.org/wiki/American_airborne_landings_in_Normandy
+  accessed: 2026-09-23
+
+- id: ww2db-normandy
+  kind: web
+  author: WW2DB
+  title: Normandy Campaign, Phase 1
+  url: https://ww2db.com/battle_spec.php?battle_id=2
+  accessed: 2026-09-23
+  note: Build-up to 30 June. A secondary summary; the primary figure is still to be traced.
+
+# Official histories: the standard accounts, for further reading and for
+# tracing figures that are still marked unverified.
+
+- id: harrison1951
+  kind: official
+  author: Gordon A. Harrison
+  title: "Cross-Channel Attack (United States Army in World War II: The European Theater of Operations)"
+  publisher: Office of the Chief of Military History, US Army
+  year: 1951
+  url: https://archive.org/details/CMHPub741CrossChannelAttack
+
+- id: blumenson1961
+  kind: official
+  author: Martin Blumenson
+  title: "Breakout and Pursuit (United States Army in World War II: The European Theater of Operations)"
+  publisher: Office of the Chief of Military History, US Army
+  year: 1961
+
+- id: ruppenthal1953
+  kind: official
+  author: Roland G. Ruppenthal
+  title: "Logistical Support of the Armies, Volume I (United States Army in World War II: The European Theater of Operations)"
+  publisher: Office of the Chief of Military History, US Army
+  year: 1953
+
+- id: ellis1962
+  kind: official
+  author: L. F. Ellis
+  title: "Victory in the West, Volume I: The Battle of Normandy (History of the Second World War, United Kingdom Military Series)"
+  publisher: HMSO
+  year: 1962
+  url: https://www.ibiblio.org/hyperwar/UN/UK/UK-NWE-Victory-I/index.html
+
+- id: stacey1960
+  kind: official
+  author: C. P. Stacey
+  title: "The Victory Campaign: The Operations in North-West Europe, 1944–1945 (Official History of the Canadian Army in the Second World War, Volume III)"
+  publisher: Queen's Printer, Ottawa
+  year: 1960
+
+# Map data
+
+- id: naturalearth
+  kind: data
+  author: Natural Earth
+  title: Natural Earth vector data (land, borders, rivers)
+  url: https://www.naturalearthdata.com/
+  note: Public domain.
+
+- id: france-geojson
+  kind: data
+  author: Grégoire David
+  title: france-geojson
+  url: https://github.com/gregoiredavid/france-geojson
+  note: French coastline and departments, derived from IGN and INSEE open data.

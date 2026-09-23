@@ -2,7 +2,7 @@
 
 An interactive map of the Normandy campaign, from the eve of D-Day (5 June 1944) to the crossing of the Seine at the end of August. It opens on the globe, closes in on the Channel coast, lands on the five beaches, and then follows the Allied area of control as it spreads across Normandy through 18 key moments: the airborne drops, Omaha, the link-up, the storm, Cherbourg, Caen, Goodwood, Cobra, Avranches, Mortain, the Falaise pocket, the liberation of Paris and the end of the battle.
 
-Each moment has an info panel with context and approximate troop numbers by army and by area.
+Each moment has its own page (e.g. `/cobra/`) with an info panel giving context and troop numbers, and every figure links to its source. There is also a text-only [story](https://mattyboomboom.github.io/Normandy44/story/) page, an [About](https://mattyboomboom.github.io/Normandy44/about/) page and a [Sources](https://mattyboomboom.github.io/Normandy44/sources/) page.
 
 ## Running it
 
@@ -11,14 +11,15 @@ Built with [Astro](https://astro.build) and TypeScript, rendered with d3. Needs 
 ```sh
 npm install
 npm run dev        # local dev server at http://localhost:4321/Normandy44/
-npm run build      # static site in dist/
+npm run build      # preview images + static site in dist/
 npm run preview    # serve the built site
 npm run check      # type-check
+npm test           # unit tests, including the content checks
 ```
 
 ## Deploying
 
-The site is published to GitHub Pages at <https://mattyboomboom.github.io/Normandy44/>. Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it; progress shows in the repo's **Actions** tab. (Repo **Settings → Pages → Source** must be set to **GitHub Actions**.)
+The site is published to GitHub Pages at <https://mattyboomboom.github.io/Normandy44/>. Every push to `main` runs `.github/workflows/deploy.yml`, which type-checks, runs the unit tests, builds the site and publishes it; progress shows in the repo's **Actions** tab. Pull requests get the checks but are not published. (Repo **Settings → Pages → Source** must be set to **GitHub Actions**.)
 
 Because Pages serves the site from the `/Normandy44/` sub-folder, `astro.config.mjs` sets that as the base path. Links to files in `public/` must go through `withBase()` from `src/lib/url.ts`, or they will break there.
 
@@ -28,34 +29,61 @@ To host at the root of a domain instead (a custom domain on Pages, or Vercel), b
 
 ```
 src/
-  pages/index.astro     page markup (map SVG, counter, panel, legend, timeline)
-  atlas/main.ts         camera, layers, overlays, panel, timeline, playback
-  atlas/geo.ts          loads and decodes the base map
-  atlas/rings.ts        resampling of the areas of control for morphing
-  data/scenes.ts        the 18 moments: text, figures, events, arrows, camera
-  data/areas.ts         outlines of each landing force's area of control over time
-  data/places.ts        town and sea labels with the zoom level they appear at
-  data/*.ts             nation colours, hand-traced rivers, troops-ashore series, types
-  lib/url.ts            withBase(): prefixes links with the base path
-  styles/               atlas styles and self-hosted fonts
-  fonts/                woff2 files (Latin subsets)
-public/data/geo.topo.json   base map, generated (see below)
-data-src/geo.json           base map source (GeoJSON)
-scripts/                    build and test tooling
-prototype/index.html        the original single-file prototype, kept for reference
-tests/visual/baseline/      screenshots of every moment from the prototype
+  content/moments/*.yaml  the 18 moments: text, figures (with sources), events, arrows, camera
+  content/sources.yaml    bibliography
+  content/schema.ts       what a moment and a source must look like (checked at build)
+  content.config.ts       registers the two collections
+  pages/                  index (first moment), [moment] (one page per moment),
+                          story, about, sources, 404, sitemap.xml, robots.txt
+  components/Atlas.astro  the atlas markup, pre-filled with the moment's text
+  layouts/                Base (metadata), Page (reading pages)
+  atlas/                  the map in the browser:
+    main.ts                 wires everything together, runs transitions
+    camera.ts               camera framing and flights (pure, tested)
+    view.ts                 projection and screen layout
+    areas.ts                areas of Allied control and the front line
+    layers.ts               base map, beaches, town and sea labels
+    markers.ts              event markers, arrows, bombing zones, popover
+    panel.ts                info panel and day counter
+    timeline.ts, player.ts  timeline bar and autoplay
+    router.ts               one address per moment, Back / Forward
+    rings.ts, geo.ts        ring resampling; base map loading
+  data/                   area outlines over time, places, rivers, nation colours,
+                          troops-ashore series, shared types
+  lib/                    content loading and cross-checks, URLs, page metadata
+public/data/geo.topo.json base map, generated from data-src/geo.json (npm run geo)
+public/og/                preview images, generated on every build (npm run og)
+scripts/                  build and test tooling; og-fonts/ holds TTF copies of the fonts
+tests/unit/               unit tests (vitest)
+tests/visual/baseline/    screenshots of every moment, for the visual check
+prototype/index.html      the original single-file prototype, kept for reference
 ```
 
-To edit the story, change `src/data/scenes.ts`. To change the base map, edit `data-src/geo.json` and run `npm run geo` to regenerate `public/data/geo.topo.json` (lossless: coordinates are kept to 4 decimal places).
+### Editing the story
+
+Each moment is a YAML file in `src/content/moments/`, named `NN-id.yaml`: the number sets the order, the id becomes the address (`12-cobra.yaml` → `/cobra/`). Every figure needs a `check` status, and a `verified` figure needs at least one `src` key from `src/content/sources.yaml`:
+
+```yaml
+forces:
+  - n: us                      # nation colour: us uk ca pl fr de all
+    k: Ashore at Omaha         # what is counted
+    v: 34,250                  # the figure as shown
+    s: Detail line             # optional
+    src: [ddaystory]           # keys in sources.yaml
+    check: verified            # or unverified (shown in amber)
+    note: Anything a careful reader should know.
+```
+
+The build and the unit tests fail with a clear message if a moment breaks the rules: an unknown source, an unknown area state, a point outside the map, a figure without a check status, a gap in the numbering, and so on. To change the base map, edit `data-src/geo.json` and run `npm run geo` (lossless: coordinates are kept to 4 decimal places).
 
 ## Visual regression check
 
-`tests/visual/baseline/` holds a screenshot of every moment, desktop and mobile, taken from the original prototype. To check the site still looks the same:
+`tests/visual/baseline/` holds a screenshot of every moment, desktop and mobile. (The first baseline was taken from the prototype and matched the port; it has since been replaced by the current site, which adds source links and corrected figures.) To check the site still looks the same:
 
 ```sh
 npx playwright install chromium   # first time only
 npm run build && npm run preview  # in one terminal
-npm run shots -- http://localhost:4321/Normandy44/ tests/visual/current
+npm run shots -- http://localhost:4321/Normandy44/ tests/visual/current --paths
 npm run compare -- tests/visual/baseline tests/visual/current
 ```
 
@@ -68,10 +96,12 @@ npm run compare -- tests/visual/baseline tests/visual/current
 - Click any point on the timeline to jump there.
 - Drag to pan and scroll or pinch to zoom; stepping to another moment resets the view.
 - Click an event marker on the map for a short note about it.
-- Each moment has its own link, e.g. `#scene=12` opens Operation Cobra.
+- Each moment has its own address, e.g. `/cobra/`, and Back / Forward step through the moments you visited. Old `#scene=12` links still work.
 
 ## Sources and caveats
 
-Front lines and areas of control are simplified from period situation maps and are approximate, drawn to show the shape of the campaign rather than the exact line on a given day. Troop, casualty and supply figures are rounded, widely cited totals (US Army and Commonwealth official histories, the D-Day Story and Juno Beach Centre figures, among others); sources differ, and German losses in particular are estimates.
+Front lines and areas of control are simplified from period situation maps and are approximate, drawn to show the shape of the campaign rather than the exact line on a given day.
 
-Map data: Natural Earth (public domain), and the French coastline from france-geojson (derived from IGN / INSEE open data). Rendering: d3 v7. Fonts: Big Shoulders Stencil Display and Source Serif 4 (SIL Open Font License), self-hosted from Fontsource.
+Every figure is listed on the Sources page with its source, its check status and any notes. In September 2026 the figures were checked against the D-Day Story (Portsmouth), the Congressional Research Service's D-Day primer, the National WWII Museum, and Wikipedia articles and the works they cite; several were corrected in the process (their notes say what changed) and five are marked unverified until they can be traced, most likely in the US and British official histories.
+
+Map data: Natural Earth (public domain), and the French coastline from france-geojson (derived from IGN / INSEE open data). Rendering: d3. Fonts: Big Shoulders Stencil Display and Source Serif 4 (SIL Open Font License), self-hosted from Fontsource.

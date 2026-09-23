@@ -7,3 +7,4 @@ dist/
 test-results/
 tests/visual/current/
 tests/visual/diff/
+public/og/

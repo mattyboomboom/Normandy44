@@ -1,0 +1,49 @@
+# Half of Caen (4–9 July)
+order: 10
+day: 33
+date: 4–9 July
+title: Half of Caen
+cam: [ [ -1.8, 48.98 ], [ -0.05, 49.45 ] ]
+state: s5
+beaches: true
+body:
+  - Canadians take Carpiquet on 4 July. On the evening of the 7th, some 450 heavy bombers flatten much of the old city, and Operation Charnwood clears Caen north of the Orne by 9 July.
+  - In the west, American divisions grind through the bocage, where every hedgerow is a fortified line. La Haye-du-Puits falls on 8 July.
+forces:
+  - n: all
+    k: Allied troops ashore
+    v: 1 million+
+    s: Passed in the first half of July
+    src:
+      - wp-overlord
+    check: unverified
+    note: Over a million troops were committed in all; the date the millionth man landed still needs a source.
+  - n: uk
+    k: Operation Charnwood
+    s: British 3rd and 59th, 3rd Canadian Divisions
+  - n: de
+    k: Defending Caen
+    s: 12th SS Hitlerjugend and 16th Luftwaffe Field Division
+events:
+  - n: Caen
+    p: [ -0.37, 49.183 ]
+    k: star
+    nat: uk
+    note: Northern half taken, 9 July
+  - n: Carpiquet
+    p: [ -0.44, 49.185 ]
+    k: point
+    nat: ca
+    note: Operation Windsor, 4 July
+  - n: La Haye-du-Puits
+    p: [ -1.545, 49.29 ]
+    k: point
+    nat: us
+    note: Taken 8 July
+arrows:
+  - n: ca
+    pts: [ [ -0.47, 49.21 ], [ -0.44, 49.2 ], [ -0.4, 49.185 ] ]
+    w: 2.2
+  - n: uk
+    pts: [ [ -0.36, 49.235 ], [ -0.36, 49.21 ], [ -0.365, 49.19 ] ]
+    w: 2.2

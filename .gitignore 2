@@ -1,9 +1,0 @@
-node_modules/
-dist/
-.astro/
-.vercel/
-.DS_Store
-.env*
-test-results/
-tests/visual/current/
-tests/visual/diff/

@@ -38,6 +38,12 @@ export interface Force {
   v?: string;
   /** Sub-line with detail */
   s?: string;
+  /** Keys into the bibliography (src/content/sources.yaml) supporting this figure */
+  src?: string[];
+  /** Whether the figure has been checked against its sources */
+  check?: 'verified' | 'unverified';
+  /** Caveats about the figure */
+  note?: string;
 }
 
 export type EventKind = 'star' | 'clash' | 'target' | 'para' | 'fort' | 'gap' | 'storm' | 'bomb' | 'harbour' | 'point';
@@ -66,7 +72,10 @@ export interface Arrow {
 export type Camera = [LonLat, LonLat] | { globe: true; center: LonLat };
 
 export interface Scene {
+  /** URL slug, from the content file name (01-eve.yaml -> eve) */
   id: string;
+  /** Position in the story, 1-based */
+  order: number;
   /** Days relative to D-Day (6 June 1944 = 0) */
   day: number;
   date: string;
@@ -80,4 +89,19 @@ export interface Scene {
   forcesNote?: string;
   events?: MapEvent[];
   arrows?: Arrow[];
+}
+
+/** A bibliography entry (src/content/sources.yaml). */
+export interface Source {
+  id: string;
+  kind: 'web' | 'book' | 'official' | 'data';
+  author: string;
+  title: string;
+  publisher?: string;
+  year?: number;
+  pages?: string;
+  url?: string;
+  accessed?: Date;
+  via?: string;
+  note?: string;
 }

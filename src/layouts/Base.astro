@@ -1,0 +1,55 @@
+---
+// Document shell shared by every page: metadata for search engines and
+// link previews, fonts, icon.
+import '../styles/fonts.css';
+import { withBase } from '../lib/url';
+import { SITE_NAME } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Site-relative path of this page, e.g. "cobra/" ("" for the home page) */
+  path: string;
+  /** Site-relative path of the preview image */
+  image?: string;
+  imageAlt?: string;
+  bodyClass?: string;
+  preloadMap?: boolean;
+}
+const { title, description, path, image = 'og/default.png', imageAlt = 'Map of the Normandy campaign', bodyClass, preloadMap = false } = Astro.props;
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonical = new URL(withBase(path), site).href;
+const imageUrl = new URL(withBase(image), site).href;
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+<meta name="theme-color" content="#182530">
+<link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml">
+<link rel="sitemap" href={withBase('sitemap.xml')}>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={SITE_NAME}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={imageUrl}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content={imageAlt}>
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={imageUrl}>
+{preloadMap && <link rel="preload" href={withBase('data/geo.topo.json')} as="fetch" crossorigin>}
+<slot name="head" />
+</head>
+<body class={bodyClass}>
+<slot />
+</body>
+</html>

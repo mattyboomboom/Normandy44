@@ -1,0 +1,61 @@
+# A foothold, not yet a front (Midnight, 6 June)
+order: 6
+day: 0
+date: Midnight, 6 June
+title: A foothold, not yet a front
+cam: [ [ -1.5, 49.17 ], [ -0.08, 49.5 ] ]
+state: s1
+beaches: true
+body:
+  - By midnight about 156,000 Allied troops are in France, but no beachhead has reached its first-day objectives and Caen is still German.
+  - 21st Panzer’s counter-attack reaches the sea through the gap between Juno and Sword before pulling back. Utah is still cut off from Omaha.
+forces:
+  - n: us
+    k: American troops ashore
+    v: ≈73,000
+    src:
+      - ddaystory
+      - crs2019
+    check: verified
+    note: Includes about 15,500 airborne troops.
+  - n: uk
+    k: British troops ashore
+    v: ≈61,700
+    src:
+      - ddaystory
+      - crs2019
+    check: verified
+    note: 61,715, including 7,900 airborne.
+  - n: ca
+    k: Canadian troops ashore
+    v: ≈21,400
+    src:
+      - ddaystory
+      - crs2019
+    check: verified
+  - n: all
+    k: Allied casualties
+    v: ≈10,300
+    s: US ≈6,600, British ≈2,700, Canadian 946
+    src:
+      - crs2019
+    check: verified
+    note: "Killed, wounded and missing: 6,603 US, 2,700 British, 946 Canadian. The D-Day Story counts 4,436 Allied dead."
+  - n: de
+    k: German casualties
+    v: 4,000–9,000
+    s: Estimates vary widely
+    src:
+      - ddaystory
+      - wp-landings
+    check: verified
+events:
+  - n: Caen
+    p: [ -0.37, 49.183 ]
+    k: target
+    nat: de
+    note: D-Day objective, still in German hands
+arrows:
+  - n: de
+    pts: [ [ -0.4, 49.16 ], [ -0.39, 49.23 ], [ -0.355, 49.31 ] ]
+    w: 2.6

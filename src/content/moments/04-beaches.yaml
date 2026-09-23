@@ -1,0 +1,61 @@
+# H-Hour on five beaches (06:30 – 07:45, 6 June)
+order: 4
+day: 0
+date: 06:30 – 07:45, 6 June
+title: H-Hour on five beaches
+cam: [ [ -1.42, 49.22 ], [ -0.12, 49.5 ] ]
+state: s0
+beaches: true
+body:
+  - Along 50 miles of coast the landing craft go in on a rising tide. Americans hit Utah and Omaha at 06:30; British and Canadians land about an hour later on Gold, Juno and Sword, where the tide came in later.
+forces:
+  - n: us
+    k: "Utah: US 4th Infantry Division"
+    v: 23,250
+    src:
+      - ddaystory
+    check: verified
+  - n: us
+    k: "Omaha: US 1st and 29th Infantry Divisions"
+    v: 34,250
+    src:
+      - ddaystory
+    check: verified
+  - n: uk
+    k: "Gold: British 50th (Northumbrian) Division"
+    v: 24,970
+    src:
+      - ddaystory
+    check: verified
+  - n: ca
+    k: "Juno: 3rd Canadian Division"
+    v: 21,400
+    src:
+      - ddaystory
+    check: verified
+  - n: uk
+    k: "Sword: British 3rd Division"
+    v: 28,845
+    src:
+      - ddaystory
+    check: verified
+  - n: de
+    k: Coastal defenders
+    s: 709th, 352nd and 716th Divisions; 21st Panzer near Caen
+forcesNote: Troops ashore by the end of 6 June
+arrows:
+  - n: us
+    pts: [ [ -1.12, 49.47 ], [ -1.15, 49.435 ], [ -1.19, 49.42 ] ]
+    w: 3
+  - n: us
+    pts: [ [ -0.88, 49.44 ], [ -0.88, 49.4 ], [ -0.88, 49.37 ] ]
+    w: 3
+  - n: uk
+    pts: [ [ -0.565, 49.41 ], [ -0.565, 49.37 ], [ -0.565, 49.34 ] ]
+    w: 3
+  - n: ca
+    pts: [ [ -0.435, 49.4 ], [ -0.435, 49.365 ], [ -0.435, 49.335 ] ]
+    w: 3
+  - n: uk
+    pts: [ [ -0.29, 49.36 ], [ -0.29, 49.325 ], [ -0.29, 49.296 ] ]
+    w: 3
