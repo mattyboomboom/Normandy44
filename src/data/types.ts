@@ -90,7 +90,7 @@ export interface Unit {
 
 /** A line on a close-up map: start line, objective, road, ridge. */
 export interface TacLine {
-  kind: 'start' | 'objective' | 'road' | 'ridge' | 'front';
+  kind: 'start' | 'objective' | 'road' | 'ridge' | 'front' | 'flank';
   pts: LonLat[];
   label?: string;
   n?: Nation;

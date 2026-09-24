@@ -62,7 +62,7 @@ export const unit = z.object({
 });
 
 export const tacLine = z.object({
-  kind: z.enum(['start', 'objective', 'road', 'ridge', 'front']),
+  kind: z.enum(['start', 'objective', 'road', 'ridge', 'front', 'flank']),
   pts: z.array(lonLat).min(2),
   label: z.string().optional(),
   n: nation.optional()

@@ -89,8 +89,20 @@ export class BaseMap {
         const mid = view.P(ln[Math.floor(ln.length / 2)]) as Pt;
         const lbl = g.select('text').style('display', s > 20000 ? '' : 'none');
         const tight = s < 45000;
-        if (k === 'utah') lbl.attr('x', mid[0] + (tight ? -14 : 14)).attr('y', mid[1] + 6).attr('text-anchor', tight ? 'end' : 'start');
-        else if (tight && k === 'juno') lbl.attr('x', mid[0]).attr('y', mid[1] + 30).attr('text-anchor', 'middle');
+        // Utah goes inland when zoomed out; if an event marker is near, above the beach's north end
+        const crowded = ctx.eventPoints.some(q => q[0] < mid[0] && mid[0] - q[0] < 160 && Math.abs(q[1] - mid[1]) < 50);
+        if (k === 'utah' && crowded) {
+          const top = ln.map(p => view.P(p) as Pt).reduce((a, b) => (b[1] < a[1] ? b : a));
+          lbl.attr('x', top[0]).attr('y', top[1] - 12).attr('text-anchor', 'middle');
+        } else if (k === 'utah') lbl.attr('x', mid[0] + (tight ? -14 : 14)).attr('y', mid[1] + 6).attr('text-anchor', tight ? 'end' : 'start');
+        else if (tight && k === 'juno') {
+          // below the beach, clear of Gold and Sword; if event markers are there, above (or, on a phone, not at all)
+          const below = !ctx.eventPoints.some(q => Math.abs(q[0] - mid[0]) < 90 && q[1] > mid[1] && q[1] - mid[1] < 70);
+          if (!below && view.mobile) lbl.style('display', 'none');
+          lbl.attr('x', mid[0]).attr('y', below ? mid[1] + 30 : mid[1] - 14).attr('text-anchor', 'middle');
+        }
+        // an event marker just east of the label: slide the label west, clear of it
+        else if (ctx.eventPoints.some(q => q[0] > mid[0] && q[0] - mid[0] < 120 && Math.abs(q[1] - mid[1]) < 50)) lbl.attr('x', mid[0] - 6).attr('y', mid[1] - 14).attr('text-anchor', 'end');
         else lbl.attr('x', mid[0]).attr('y', mid[1] - 14).attr('text-anchor', 'middle');
       }
     }

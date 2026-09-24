@@ -47,7 +47,7 @@ export class TacticalLayer {
   clear(): void {
     this.under.selectAll('*').remove();
     this.over.selectAll('*').remove();
-    document.body.classList.remove('tac');
+    document.body.classList.remove('tac', 'flank');
   }
 
   /** Add a scene's close-up detail, fading it in. */
@@ -56,6 +56,8 @@ export class TacticalLayer {
     if (!isTactical(sc) && !(sc.labels && sc.labels.length)) return;
     // close-up mode (faded areas, unit key in the legend) only when formations are shown
     if (sc.units && sc.units.length) document.body.classList.add('tac');
+    // airborne flank screens get their own legend entries
+    if (sc.lines?.some(l => l.kind === 'flank')) document.body.classList.add('flank');
     const fade = (g: G, i: number) => {
       g.attr('opacity', 0).transition().delay(this.reduceMotion ? 0 : 150 + i * 90).duration(this.reduceMotion ? 0 : 450).attr('opacity', 1);
     };
