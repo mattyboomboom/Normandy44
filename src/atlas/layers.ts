@@ -13,10 +13,10 @@ import type { Pt, View } from './view';
 // World land is drawn only outside this box; inside it the detailed layers take over.
 const HOLE: Polygon = (() => {
   const r: LonLat[] = [], W = -12, S = 41, E = 12, N = 56;
-  for (let y = S; y <= N; y += 0.5) r.push([W, y]);
-  for (let x = W; x <= E; x += 0.5) r.push([x, N]);
-  for (let y = N; y >= S; y -= 0.5) r.push([E, y]);
-  for (let x = E; x >= W; x -= 0.5) r.push([x, S]);
+  for (let y = S; y <= N; y += 0.25) r.push([W, y]);
+  for (let x = W; x <= E; x += 0.25) r.push([x, N]);
+  for (let y = N; y >= S; y -= 0.25) r.push([E, y]);
+  for (let x = E; x >= W; x -= 0.25) r.push([x, S]);
   return { type: 'Polygon', coordinates: [r] };
 })();
 
@@ -68,6 +68,7 @@ export class BaseMap {
     select('#world-hole').attr('d', `M-10,-10H${view.W + 10}V${view.H + 10}H-10Z` + (view.path(HOLE) || ''));
     select('#borders').attr('d', s < 9000 ? view.path(geo.borders) : null);
     select('#land-other').attr('d', view.path(geo.others));
+    select('#coast-other').attr('d', view.path(geo.othersCoast));
     select('#land-fr').attr('d', view.path(geo.france));
 
     this.rivMajor.attr('d', s > 2500 ? view.path(geo.rivers) : null);

@@ -102,7 +102,6 @@ export function checkContent(scenes: Scene[], sources: Source[], stateKeys: stri
       if (!srcIds.has(key)) errors.push(`${where}, armour count: unknown source "${key}" (add it to src/content/sources.yaml)`);
     }
   });
-  if (scenes.length && scenes[0].cam && Array.isArray(scenes[0].cam)) errors.push('the first moment must be a globe view');
   const ids = scenes.map(s => s.id);
   ids.forEach((id, i) => { if (ids.indexOf(id) !== i) errors.push(`duplicate moment id "${id}"`); });
   for (const s of sources) {

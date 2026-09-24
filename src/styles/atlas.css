@@ -20,7 +20,8 @@ body{background:var(--sea-deep);color:var(--ink);font-family:var(--serif);overfl
 .world{fill:var(--land-other)}
 .borders{fill:none;stroke:rgba(60,60,48,.35);stroke-width:.6;stroke-dasharray:2 2}
 .land-fr{fill:var(--land-fr);stroke:var(--coast);stroke-width:.6}
-.land-other{fill:var(--land-other);stroke:var(--coast);stroke-width:.5}
+.land-other{fill:var(--land-other);stroke:var(--land-other);stroke-width:1.2}
+.coast-other{fill:none;stroke:var(--coast);stroke-width:.5}
 .river{fill:none;stroke:#6f93a6;stroke-width:1.1;stroke-linecap:round;opacity:.8}
 .river.minor{stroke-width:.8;opacity:.6}
 

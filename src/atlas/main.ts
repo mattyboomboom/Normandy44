@@ -37,10 +37,17 @@ interface AtlasData {
 
 const $ = (id: string) => document.getElementById(id) as HTMLElement;
 
+/**
+ * Western Europe: Britain, France, the Low Countries, Germany and the top of
+ * Spain. The front page flies in from the globe to this view, and the first
+ * moment (Fortress Europe, src/content/moments/01-eve.yaml) holds it.
+ */
+const EUROPE: [[number, number], [number, number]] = [[-10.5, 42.5], [15.5, 57]];
+
 /** What the cover shows: a pulsing marker on the Normandy coast. */
 const COVER_SCENE: Scene = {
   id: 'cover', order: 0, day: -1, date: '', title: '', state: 's0', beaches: false, body: [],
-  cam: { globe: true, center: [-9, 44] },
+  cam: EUROPE,
   events: [{ n: 'Normandy', p: [-0.6, 49.3], k: 'star', nat: 'all', lp: 'r' }]
 };
 
@@ -191,8 +198,7 @@ class Atlas {
     this.cover.undock(!!opts.fresh);
     this.panel.setCounter(this.scenes[0].day, this.scenes[0]);
     view.layout(true); view.measureBlocked();
-    const to = { ...frameCamera(COVER_SCENE.cam, view.avail, view.mobile) };
-    to.scale *= view.mobile ? 0.9 : 0.95;
+    const to = frameCamera(COVER_SCENE.cam, view.avail, view.mobile);
     this.fly(to, COVER_SCENE.state, opts.duration, () => {}, () => {
       this.arrived = true;
       this.markers.build(COVER_SCENE);
@@ -219,7 +225,7 @@ class Atlas {
     this.stopDrift();
     if (this.reduceMotion) return;
     this.drift = timer(el => {
-      this.view.cam = { ...home, lon: home.lon + 10 * Math.sin(el / 9000) };
+      this.view.cam = { ...home, lon: home.lon + 1.2 * Math.sin(el / 9000) };
       this.render();
     });
   }
@@ -292,7 +298,7 @@ class Atlas {
       this.scene = COVER_SCENE;
       view.cam = { lon: -42, lat: 20, scale: globeScale(view.avail) * 0.6 };
       this.render();
-      this.showCover({ duration: this.reduceMotion ? 0 : 3200, fresh: true });
+      this.showCover({ duration: this.reduceMotion ? 0 : 4200, fresh: true });
     } else {
       this.scene = scenes[startAt];
       this.areas.set(this.scene.state);

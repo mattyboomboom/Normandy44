@@ -19,6 +19,7 @@ import { STATES, RING_NATION } from '../src/data/areas';
 import { NAT, BEACH_NAT, RING_KEYS } from '../src/data/nations';
 import { HAND_RIVERS } from '../src/data/rivers';
 import { resampleStates } from '../src/atlas/rings';
+import { coastline, densifyCuts } from '../src/atlas/coast';
 import { frameCamera, type Box } from '../src/atlas/camera';
 import { dayLabel, fullDate } from '../src/atlas/panel';
 import type { LonLat, Scene } from '../src/data/types';
@@ -132,7 +133,8 @@ function render(sc: Scene, cover = false): string {
 <path d="${d({ type: 'Sphere' })}" fill="#23343f"/>
 ${s < 3500 ? `<path d="${d(geoGraticule10())}" fill="none" stroke="rgba(233,228,212,.07)" stroke-width=".7"/>` : ''}
 ${s < 20000 ? `<path d="${d(geo.world)}" fill="#b4b7a2"/>` : ''}
-<path d="${d(geo.others)}" fill="#b4b7a2" stroke="#6f6a52" stroke-width=".5"/>
+<path d="${d(densifyCuts(geo.others))}" fill="#b4b7a2" stroke="#b4b7a2" stroke-width="1.2"/>
+<path d="${d(coastline(geo.others))}" fill="none" stroke="#6f6a52" stroke-width=".5"/>
 <path d="${d(geo.france)}" fill="#d6cba9" stroke="#6f6a52" stroke-width=".6"/>
 ${s > 2500 ? `<path d="${d(geo.rivers)}" fill="none" stroke="#6f93a6" stroke-width="1.1" opacity=".8"/>` : ''}
 ${s > 5000 ? `<path d="${d(geo.riversMinor)}" fill="none" stroke="#6f93a6" stroke-width=".8" opacity=".6"/>` : ''}

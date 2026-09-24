@@ -74,7 +74,7 @@ describe('schema and cross-checks catch mistakes', () => {
   });
 
   it('rejects a point outside the map area', () => {
-    const bad = { ...base, events: [{ n: 'X', p: [49.2, -0.4], k: 'point' }] };
+    const bad = { ...base, events: [{ n: 'X', p: [49.2, -0.4], k: 'point' }] }; // lat/lon swapped
     expect(moment.safeParse(bad).success).toBe(false);
   });
 

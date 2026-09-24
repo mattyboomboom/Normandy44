@@ -2,9 +2,9 @@
 // moment or source fails the build) and by the unit tests.
 import { z } from 'astro/zod';
 
-const lon = z.number().min(-10).max(10);
-const lat = z.number().min(44).max(56);
-/** A point in the map area: western France and southern England */
+const lon = z.number().min(-20).max(25);
+const lat = z.number().min(35).max(62);
+/** A point in the map area: western Europe */
 export const lonLat = z.tuple([lon, lat]);
 
 export const nation = z.enum(['us', 'uk', 'ca', 'pl', 'fr', 'de', 'all']);

@@ -5,12 +5,15 @@ import type { Topology, GeometryObject } from 'topojson-specification';
 import type { Geometry, MultiLineString, MultiPolygon, FeatureCollection, LineString } from 'geojson';
 import type { LonLat, RingKey } from '../data/types';
 import { withBase } from '../lib/url';
+import { coastline, densifyCuts } from './coast';
 
 export interface Geo {
   world: MultiPolygon;
   borders: MultiLineString;
   france: MultiPolygon;
   others: MultiPolygon;
+  /** Coastline of `others`, without the straight edges where it was cut out of the world */
+  othersCoast: MultiLineString;
   rivers: MultiLineString;
   riversMinor: MultiLineString;
   beaches: Record<RingKey, LonLat[]>;
@@ -31,9 +34,11 @@ export async function loadGeo(url = GEO_URL): Promise<Geo> {
     world: geom<MultiPolygon>('world'),
     borders: geom<MultiLineString>('borders'),
     france: geom<MultiPolygon>('france'),
-    others: geom<MultiPolygon>('others'),
+    others: densifyCuts(geom<MultiPolygon>('others')),
+    othersCoast: coastline(geom<MultiPolygon>('others')),
     rivers: geom<MultiLineString>('rivers'),
     riversMinor: geom<MultiLineString>('riversMinor'),
     beaches
   };
 }
+

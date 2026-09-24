@@ -3,9 +3,7 @@ order: 1
 title: Fortress Europe
 day: -1
 date: 5 June 1944
-cam:
-  globe: true
-  center: [-13, 41.5]
+cam: [[-10.5, 42.5], [15.5, 57.0]]
 state: s0
 beaches: false
 body:
