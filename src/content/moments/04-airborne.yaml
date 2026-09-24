@@ -1,6 +1,7 @@
 # Airborne assault (00:16 – 02:30, 6 June)
 order: 4
 title: Airborne assault
+sound: air
 day: 0
 date: 00:16 – 02:30, 6 June
 cam: [[-1.55, 49.16], [0.2, 49.52]]

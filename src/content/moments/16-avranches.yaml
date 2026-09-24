@@ -1,6 +1,7 @@
 # Breakout at Avranches (30 July – 1 August)
 order: 16
 title: Breakout at Avranches
+sound: distant
 day: 55
 date: 30 July – 1 August
 cam: [[-1.95, 48.45], [-0.15, 49.42]]

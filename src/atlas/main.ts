@@ -21,6 +21,7 @@ import { Player } from './player';
 import { Router, COVER } from './router';
 import { Cover } from './cover';
 import { TacticalLayer } from './tactical';
+import { Soundscape } from './sound';
 
 /** Data embedded in the page by src/components/Atlas.astro */
 interface AtlasData {
@@ -74,6 +75,7 @@ class Atlas {
   private readonly markers: Markers;
   private readonly tactical: TacticalLayer;
   private readonly panel = new Panel(figureHref, armourHref);
+  private readonly sound = new Soundscape($('sound') as HTMLButtonElement);
   private readonly timeline: Timeline;
   private readonly player: Player;
   private readonly router: Router;
@@ -176,6 +178,7 @@ class Atlas {
     this.router.show(i, !!opts.push);
     this.markers.clear(); this.tactical.clear();
     this.panel.fill(sc); this.timeline.set(i);
+    this.sound.setMood(sc.sound);
     if (fromCover || !this.cover.isDocked()) this.cover.dock(!!opts.fresh);
     view.layout(); view.measureBlocked();
 
@@ -195,6 +198,7 @@ class Atlas {
     this.idx = COVER; this.scene = COVER_SCENE; this.arrived = false;
     this.router.show(COVER, !!opts.push);
     this.timeline.set(COVER);
+    this.sound.setMood('calm');
     this.cover.undock(!!opts.fresh);
     this.panel.setCounter(this.scenes[0].day, this.scenes[0]);
     view.layout(true); view.measureBlocked();
@@ -252,6 +256,7 @@ class Atlas {
       else if (e.key === 'Home') { player.set(false); this.showCover({ push: true }); }
       else if (e.key === 'End') { player.stopTimer(); this.goTo(this.scenes.length - 1, { push: true }); }
       else if (e.key === 'Escape') this.markers.hidePop();
+      else if ((e.key === 'm' || e.key === 'M') && !e.metaKey && !e.ctrlKey && !e.altKey) this.sound.toggle();
     });
 
     // Free exploration: drag to pan, wheel or pinch to zoom. The next moment re-centres the camera.

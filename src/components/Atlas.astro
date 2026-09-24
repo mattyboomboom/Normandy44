@@ -115,6 +115,7 @@ const data = {
   <button class="ctl" id="next" aria-label="Next moment"><svg viewBox="0 0 20 20"><path d="M7 3L14 10L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <div id="track"><div id="rail"></div><div id="fill"></div></div>
   <div id="count"></div>
+  <button class="ctl snd" id="sound" aria-pressed="false" aria-label="Turn sound on" title="Sound"><svg viewBox="0 0 20 20"><path d="M3 7.5H6L10.5 4V16L6 12.5H3Z" fill="currentColor"/><g class="snd-on" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M13.2 7.4Q14.6 10 13.2 12.6"/><path d="M15.6 5.2Q18.4 10 15.6 14.8"/></g><g class="snd-off" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M13.5 7.5L18 12.5M18 7.5L13.5 12.5"/></g></svg></button>
 </nav>
 
 <script type="application/json" id="atlas-data" set:html={JSON.stringify(data).replace(/</g, '\\u003c')}></script>

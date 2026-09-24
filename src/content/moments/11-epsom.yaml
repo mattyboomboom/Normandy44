@@ -39,6 +39,7 @@ forces:
   check: verified
 steps:
 - title: Break-in
+  sound: battle
   day: 20
   date: 26 June
   cam: [[-0.625, 49.085], [-0.425, 49.205]]
@@ -124,6 +125,7 @@ steps:
     pts: [[-0.59, 49.182], [-0.578, 49.17], [-0.565, 49.162]]
     w: 2.2
 - title: The Scottish Corridor
+  sound: battle
   day: 21
   date: 27–28 June
   cam: [[-0.625, 49.085], [-0.425, 49.205]]
@@ -224,6 +226,7 @@ steps:
     pts: [[-0.575, 49.144], [-0.556, 49.143], [-0.537, 49.142]]
     w: 2.2
 - title: II SS Panzer Corps strikes
+  sound: battle-heavy
   day: 23
   date: 29 June – 1 July
   cam: [[-0.625, 49.085], [-0.425, 49.205]]

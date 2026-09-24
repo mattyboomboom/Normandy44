@@ -1,6 +1,7 @@
 # A foothold, not yet a front (Midnight, 6 June)
 order: 7
 title: A foothold, not yet a front
+sound: night
 day: 0
 date: Midnight, 6 June
 cam: [[-1.5, 49.17], [-0.08, 49.5]]

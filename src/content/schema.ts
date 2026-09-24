@@ -1,11 +1,15 @@
 // Schemas for the atlas content. Used by src/content.config.ts (so a bad
 // moment or source fails the build) and by the unit tests.
 import { z } from 'astro/zod';
+import { MOODS } from '../data/moods';
 
 const lon = z.number().min(-20).max(25);
 const lat = z.number().min(35).max(62);
 /** A point in the map area: western Europe */
 export const lonLat = z.tuple([lon, lat]);
+
+/** Soundscape mood (see src/atlas/sound.ts) */
+export const mood = z.enum(MOODS);
 
 export const nation = z.enum(['us', 'uk', 'ca', 'pl', 'fr', 'de', 'all']);
 
@@ -111,6 +115,8 @@ export const step = z.object({
   state: stateKey,
   beaches: z.boolean().optional(),
   body: z.array(z.string().min(1)).min(1),
+  /** Overrides the moment's sound for this step */
+  sound: mood.optional(),
   ...mapFields
 });
 
@@ -128,6 +134,8 @@ export const moment = z.object({
   state: stateKey.optional(),
   beaches: z.boolean().optional(),
   body: z.array(z.string().min(1)).min(1).optional(),
+  /** The soundscape mood (steps can override it) */
+  sound: mood.optional(),
   steps: z.array(step).min(2).optional(),
   ...mapFields
 }).superRefine((m, ctx) => {

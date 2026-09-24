@@ -1,6 +1,7 @@
 # Cherbourg falls (26 June – 1 July)
 order: 10
 title: Cherbourg falls
+sound: battle
 day: 20
 date: 26 June – 1 July
 cam: [[-2.05, 49.05], [-0.95, 49.76]]

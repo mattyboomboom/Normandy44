@@ -1,6 +1,7 @@
 # Cotentin cut, then the storm (18–22 June)
 order: 9
 title: Cotentin cut, then the storm
+sound: storm
 day: 12
 date: 18–22 June
 cam: [[-2, 49.03], [-0.15, 49.74]]

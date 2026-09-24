@@ -1,4 +1,5 @@
 // Shared types for the atlas content.
+import type { Mood } from './moods';
 
 /** [longitude, latitude] in degrees */
 export type LonLat = [number, number];
@@ -152,6 +153,8 @@ export interface Scene {
   zones?: Zone[];
   labels?: TacLabel[];
   armour?: Armour;
+  /** Soundscape mood */
+  sound?: Mood;
   /** Set when the moment is told in steps */
   step?: StepInfo;
 }

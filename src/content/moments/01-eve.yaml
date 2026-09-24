@@ -1,6 +1,7 @@
 # Fortress Europe (5 June 1944)
 order: 1
 title: Fortress Europe
+sound: calm
 day: -1
 date: 5 June 1944
 cam: [[-10.5, 42.5], [15.5, 57.0]]

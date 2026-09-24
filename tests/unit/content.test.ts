@@ -33,6 +33,13 @@ describe('content files', () => {
     expect(epsom.every(s => s.forces === epsom[0].forces)).toBe(true);
   });
 
+  it('gives every scene a soundscape mood, with steps overriding their moment', () => {
+    expect(scenes.filter(s => !s.sound).map(s => s.id)).toEqual([]);
+    expect(scenes.filter(s => s.step?.moment === 'goodwood').map(s => s.sound)).toEqual(['bombing', 'battle-heavy', 'thunder']);
+    expect(scenes.find(s => s.id === 'paris')!.sound).toBe('bells');
+    expect(() => moment.parse({ ...YAML.parse(fs.readFileSync(path.join(root, 'moments', files[0]), 'utf8')), sound: 'kazoo' })).toThrow();
+  });
+
   it('opens on the eve of D-Day', () => {
     expect(scenes[0].id).toBe('eve');
     expect(scenes[0].day).toBe(-1);

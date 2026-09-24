@@ -161,6 +161,10 @@ body.tac #legend .li.li-tac{display:flex}
 .ctl:hover{border-color:var(--ink)}
 .ctl svg{width:18px;height:18px}
 .ctl:disabled{opacity:.3;cursor:default}
+.ctl.snd{margin-left:4px}
+.ctl.snd .snd-on,.ctl.snd.on .snd-off{display:none}
+.ctl.snd.on .snd-on{display:inline}
+.ctl.snd.on{border-color:var(--ink)}
 #track{position:relative;flex:1;height:100%;min-width:0}
 #rail{position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(236,231,216,.18);transform:translateY(-50%)}
 #fill{position:absolute;left:0;top:50%;height:2px;background:var(--ink);transform:translateY(-50%);width:0}

@@ -103,6 +103,7 @@ npm run compare -- tests/visual/baseline tests/visual/current
 - Click any point on the timeline to jump there.
 - Drag to pan and scroll or pinch to zoom; stepping to another moment resets the view.
 - Click an event marker on the map for a short note about it.
+- The speaker button (or M) turns the ambient soundscape on and off. It is synthesised in the browser (`src/atlas/sound.ts`), off by default, and each moment picks a mood with `sound:` in its YAML.
 - Each moment has its own address, e.g. `/cobra/`, and Back / Forward step through the moments you visited. Old `#scene=12` links still work.
 
 ## Sources and caveats

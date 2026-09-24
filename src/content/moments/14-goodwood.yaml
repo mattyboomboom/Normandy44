@@ -45,6 +45,7 @@ forces:
   check: verified
 steps:
 - title: The carpet
+  sound: bombing
   day: 42
   date: 18 July, dawn
   cam: [[-0.42, 49.09], [-0.17, 49.25]]
@@ -166,6 +167,7 @@ steps:
     pts: [[-0.33, 49.205], [-0.34, 49.19], [-0.352, 49.175]]
     w: 2.2
 - title: The ridge
+  sound: battle-heavy
   day: 42
   date: 18 July, midday
   cam: [[-0.42, 49.09], [-0.17, 49.25]]
@@ -278,6 +280,7 @@ steps:
     pts: [[-0.26, 49.178], [-0.258, 49.165], [-0.26, 49.156]]
     w: 2.2
 - title: Rain on the ridge
+  sound: thunder
   day: 43
   date: 19–20 July
   cam: [[-0.42, 49.09], [-0.17, 49.25]]

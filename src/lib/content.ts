@@ -1,5 +1,6 @@
 // Loads the moments and sources at build time and cross-checks them.
 // checkContent is pure so the unit tests can run it without Astro.
+import type { Mood } from '../data/moods';
 import type { Armour, Arrow, Camera, Force, MapEvent, Scene, Source, TacLabel, TacLine, Unit, Zone } from '../data/types';
 
 /** A moment as written in src/content/moments/*.yaml (after schema parsing). */
@@ -9,6 +10,7 @@ export interface MomentData {
   forces?: Force[];
   forcesNote?: string;
   armour?: Armour;
+  sound?: Mood;
   day?: number;
   date?: string;
   cam?: Camera;
@@ -22,7 +24,7 @@ export interface MomentData {
   zones?: Zone[];
   labels?: TacLabel[];
   steps?: {
-    title: string; day: number; date: string; cam: Camera; state: string; beaches?: boolean; body: string[];
+    title: string; day: number; date: string; cam: Camera; state: string; beaches?: boolean; body: string[]; sound?: Mood;
     events?: MapEvent[]; arrows?: Arrow[]; units?: Unit[]; lines?: TacLine[]; zones?: Zone[]; labels?: TacLabel[];
   }[];
 }
@@ -37,7 +39,7 @@ export function flattenMoments(moments: { id: string; data: MomentData }[]): Sce
   const sorted = [...moments].sort((a, b) => a.data.order - b.data.order);
   const scenes: Scene[] = [];
   for (const { id, data: m } of sorted) {
-    const shared = { title: m.title, forces: m.forces, forcesNote: m.forcesNote, armour: m.armour };
+    const shared = { title: m.title, forces: m.forces, forcesNote: m.forcesNote, armour: m.armour, sound: m.sound };
     if (!m.steps) {
       scenes.push({
         ...shared, id, order: 0, day: m.day!, date: m.date!, cam: m.cam!, state: m.state!, beaches: !!m.beaches, body: m.body!,
@@ -48,7 +50,7 @@ export function flattenMoments(moments: { id: string; data: MomentData }[]): Sce
     m.steps.forEach((st, k) => {
       scenes.push({
         ...shared, id: k === 0 ? id : `${id}-${k + 1}`, order: 0,
-        day: st.day, date: st.date, cam: st.cam, state: st.state, beaches: !!st.beaches, body: st.body,
+        day: st.day, date: st.date, cam: st.cam, state: st.state, beaches: !!st.beaches, body: st.body, sound: st.sound ?? m.sound,
         events: st.events, arrows: st.arrows, units: st.units, lines: st.lines, zones: st.zones, labels: st.labels,
         step: { n: k + 1, of: m.steps!.length, title: st.title, moment: id }
       });

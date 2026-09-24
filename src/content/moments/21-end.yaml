@@ -1,6 +1,7 @@
 # Normandy won (30 August)
 order: 21
 title: Normandy won
+sound: aftermath
 day: 85
 date: 30 August
 cam: [[-5, 46.9], [4.3, 50.2]]

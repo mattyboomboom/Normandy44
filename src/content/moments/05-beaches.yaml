@@ -1,6 +1,7 @@
 # H-Hour on five beaches (06:30 – 07:45, 6 June)
 order: 5
 title: H-Hour on five beaches
+sound: beach
 day: 0
 date: 06:30 – 07:45, 6 June
 cam: [[-1.42, 49.22], [-0.12, 49.5]]

@@ -1,6 +1,7 @@
 # Paris liberated (25 August)
 order: 20
 title: Paris liberated
+sound: bells
 day: 80
 date: 25 August
 cam: [[-1.4, 47.95], [3.4, 49.62]]
